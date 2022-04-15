@@ -164,7 +164,7 @@ autovalores
 
 En este caso, el autovalor positivo es 1.5 y al visualizarlo se observa una pendiente del autovector = 1 (tal como el caso anterior).
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=5, fig.width=5}
 data.frame(A) %>% 
   ggplot()+
   geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
