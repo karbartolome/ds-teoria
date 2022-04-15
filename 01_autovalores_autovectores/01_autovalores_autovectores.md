@@ -139,8 +139,14 @@ print(AX1)
 
 Función para obtener autovalores y autovectores:
 
+Visualizando el ejemplo de la matriz A:
+
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
+Considerando una matriz A distinta:
+
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+Otro ejemplo:
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->

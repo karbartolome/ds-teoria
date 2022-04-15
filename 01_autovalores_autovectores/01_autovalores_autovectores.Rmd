@@ -178,17 +178,22 @@ plot_eigen <- function(.matriz){
 }
 ```
 
+Visualizando el ejemplo de la matriz A:
 
-```{r}
+```{r, fig.height=3, fig.width=5}
 plot_eigen(A)
 ```
 
-```{r}
+Considerando una matriz A distinta: 
+
+```{r, fig.height=3, fig.width=5}
 A <- matrix(c(0,2,2,4), nrow=2, ncol=2)
 plot_eigen(A)
 ```
 
-```{r}
+Otro ejemplo: 
+
+```{r, fig.height=3, fig.width=5}
 A <- matrix(c(1,2,3,4), nrow=2, ncol=2)
 plot_eigen(A)
 ```
