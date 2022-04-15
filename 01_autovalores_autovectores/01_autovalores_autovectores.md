@@ -2,7 +2,7 @@ Autovalores y autovectores
 ================
 Karina Bartolomé
 
-# Matrices en R
+# Matrices en R:
 
 Matriz identidad:
 
@@ -25,6 +25,8 @@ A x−λ x = 0
 
 \| A − λ I \| = 0 –\> **Ecuación característica**
 
+Se define una matriz A:
+
 ``` r
 A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
 A
@@ -34,20 +36,19 @@ A
     ## [1,]    0    1
     ## [2,]    1    0
 
-Si λ = 1 =\> A - 1 \* I :
+Si λ = 3 =\> A - 3 \* I :
 
     ##      [,1] [,2]
-    ## [1,]   -1    1
-    ## [2,]    1   -1
+    ## [1,]   -2    1
+    ## [2,]    1   -2
 
 Calculando el determinante \| A − λ I \|
 
-    ## [1] 0
+    ## [1] 3
 
-No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
+No es igual a 0, con lo cual λ = 2 no es un autovalor de la matriz A.
 
-Calculando los autovalores que resuelvan la ecuación luego de la
-expansión de Laplace:
+Calculando los autovalores que resuelvan la ecuación:
 
 ``` r
 autovalores <- eigen(A)$values
@@ -56,7 +57,8 @@ autovalores
 
     ## [1]  1 -1
 
-Notar que si se hace:
+Notar que si se calcula el determinante \| A − λ I \| para estos
+autovalores da 0:
 
 ``` r
 det(A - autovalores[1]*I)

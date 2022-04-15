@@ -15,7 +15,7 @@ library(tidyverse)
 library(geomtextpath)
 ```
 
-# Matrices en R
+# Matrices en R:
 
 Matriz identidad:
 
@@ -38,15 +38,17 @@ A x−λ x = 0
 
 \| A − λ I \| = 0 --\> **Ecuación característica**
 
+Se define una matriz A:
+
 ```{r, echo=TRUE}
 A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
 A
 ```
 
-Si λ = 1 =\> A - 1 \* I :
+Si λ = 3 =\> A - 3 \* I :
 
 ```{r}
-lambda = 1
+lambda = 2
 A - lambda * I
 ```
 
@@ -56,16 +58,16 @@ Calculando el determinante \| A − λ I \|
 det(A - lambda*I)
 ```
 
-No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
+No es igual a 0, con lo cual λ = 2 no es un autovalor de la matriz A.
 
-Calculando los autovalores que resuelvan la ecuación luego de la expansión de Laplace:
+Calculando los autovalores que resuelvan la ecuación:
 
 ```{r, echo=TRUE}
 autovalores <- eigen(A)$values
 autovalores
 ```
 
-Notar que si se hace:
+Notar que si se calcula el determinante \| A − λ I \| para estos autovalores da 0:
 
 ```{r, echo=TRUE}
 det(A - autovalores[1]*I)
