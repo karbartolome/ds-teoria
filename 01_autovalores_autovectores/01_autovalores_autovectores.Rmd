@@ -114,8 +114,6 @@ print(AX1)
 ```{r, fig.height=5, fig.width=5}
 g <- data.frame(A) %>% 
   ggplot()+
-  geom_point(aes(x=X1,y=X2, color='Matriz A'), show.legend = FALSE, size=2)+
-  
   geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
                    arrow= arrow(length = unit(0.2, "inches")), 
                show.legend = FALSE,size=1)+
