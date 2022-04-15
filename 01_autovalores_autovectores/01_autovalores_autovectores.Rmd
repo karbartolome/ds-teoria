@@ -67,11 +67,11 @@ autovalores
 
 Notar que si se hace:
 
-```{r}
+```{r, echo=TRUE}
 det(A - autovalores[1]*I)
 ```
 
-```{r}
+```{r, echo=TRUE}
 det(A - autovalores[2]*I)
 ```
 
@@ -87,6 +87,11 @@ autovectores
 
 # Volviendo a A x = λ x
 
+```{r, echo=TRUE}
+A %*% autovectores[,1] == matrix(autovectores[,1] * autovalores[1], nrow=2)
+```
+
+
 A x : 
 
 ```{r, echo=TRUE}
@@ -97,99 +102,95 @@ AX2 = A %*% autovectores[2,]
 λ x : 
 
 ```{r, echo=TRUE}
-XL1 = autovectores[2,] * autovalores[1]
-XL2 = autovectores[1,] * autovalores[2]
+X1L1 = autovectores[1,] * autovalores[1]
+X2L2 = autovectores[2,] * autovalores[2]
 ```
 
 ```{r, echo=TRUE}
-print(XL1)
+print(X1L1)
 print(AX2)
 
-print(XL2)
+print(X2L2)
 print(AX1)
 ```
 
 # Gráficamente: 
 
-Se observa que la pendiente de cada autovector son los autovalores (`r autovalores[1]` y `r autovalores[2]`). Sin embargo, esto solo se cumple en esta matriz. 
+Función para obtener autovalores y autovectores:
 
-```{r, fig.height=5, fig.width=5}
-g <- data.frame(A) %>% 
-  ggplot()+
-  geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
-                   arrow= arrow(length = unit(0.2, "inches")), 
-               show.legend = FALSE,size=1)+
-  
-  geom_segment(data=data.frame(autovectores),
-               aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
-                   arrow= arrow(length = unit(0.2, "inches")), 
-               show.legend = FALSE, size=1)+
-  
-  geom_labelsegment(aes(x=0, xend=X1, y=0, yend=X2, 
-                       label='Matriz A', color='Matriz A'),
-               size = 3, show.legend = FALSE)+
-  
-  geom_labelsegment(data = data.frame(autovectores),
-               aes(x=0, xend=X1, y=0, yend=X2, 
-                   label='Autovectores', color='Autovectores'),
-               size=3, show.legend = FALSE)+
-  
-  theme_bw()+
-  scale_color_manual(values=c('red','blue'))+
-  labs(title='Representación geométrica de autovalores y autovectores')
-
-g
-```
-
-
-Imponiendo una restricción a valores positivos: 
-
-```{r, fig.height=5, fig.width=5}
-g +
-  ylim(c(0,NA))+
-  xlim(c(0,NA))
-```
-
-
-
-# Otro ejemplo
 
 ```{r}
-A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
-A
-autovectores <- eigen(A)$vectors
-autovalores <- eigen(A)$values
-autovalores
+plot_eigen <- function(.matriz){
+  
+  # Cálculo de autovalores y autovectores
+  autovalores  <- eigen(.matriz)$values
+  autovectores <- eigen(.matriz)$vectors
+
+  # A * X = lambda * X
+  AX1 = .matriz %*% autovectores[,1]
+  AX2 = .matriz %*% autovectores[,2]
+  
+  data.frame(.matriz) %>% 
+    ggplot()+
+    
+    
+    # AX
+    geom_segment(aes(x=0,xend=AX1[1], y=0, yend=AX1[2], color='A x1 = L1 x1'), 
+                     arrow= arrow(length = unit(0.2, "inches")), 
+                 show.legend = TRUE,size=1)+
+  
+    
+    geom_segment(aes(x=0,xend=AX2[1], y=0, yend=AX2[2], color='A x2 = L2 x2'), 
+                     arrow= arrow(length = unit(0.2, "inches")), 
+                 show.legend = TRUE,size=1)+
+
+    
+    
+    # Matriz A
+    geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
+                     arrow= arrow(length = unit(0.2, "inches")), 
+                 show.legend = TRUE,size=1)+
+    
+    # Autovectores
+    geom_segment(data=data.frame(t(autovectores)),
+                 aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
+                     arrow= arrow(length = unit(0.2, "inches")), 
+                 show.legend = TRUE, size=1)+
+    
+    geom_hline(yintercept=0)+
+    geom_vline(xintercept=0)+
+    
+    
+    theme_bw()+
+    scale_color_manual(values=c('A x1 = L1 x1'='red',
+                                'A x2 = L2 x2'='red',
+                                'Matriz A'='green',
+                                'Autovectores'='blue'))+
+    labs(title='Representación geométrica de autovalores y autovectores',
+         subtitle=paste0('Autovalores: ',
+                         round(autovalores[1],2),' y ', 
+                         round(autovalores[2],2), '\n',
+                         'Autovectores:',
+                         '(',paste0(round(autovectores[,1],2), collapse=', '), ') y ',
+                         '(',paste0(round(autovectores[,2],2), collapse=', '),')'),
+         color = 'Vector')
+  
+}
 ```
 
-En este caso, el autovalor positivo es 1.5 y al visualizarlo se observa una pendiente del autovector = 1 (tal como el caso anterior).
 
-```{r, echo=FALSE, fig.height=5, fig.width=5}
-data.frame(A) %>% 
-  ggplot()+
-  geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
-                   arrow= arrow(length = unit(0.2, "inches")), 
-               show.legend = FALSE,size=1)+
-  
-  geom_segment(data=data.frame(autovectores),
-               aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
-                   arrow= arrow(length = unit(0.2, "inches")), 
-               show.legend = FALSE, size=1)+
-  
-  geom_labelsegment(aes(x=0, xend=X1, y=0, yend=X2, 
-                       label='Matriz A', color='Matriz A'),
-               size = 3, show.legend = FALSE)+
-  
-  geom_labelsegment(data = data.frame(autovectores),
-               aes(x=0, xend=X1, y=0, yend=X2, 
-                   label='Autovectores', color='Autovectores'),
-               size=3, show.legend = FALSE)+
-  
-  theme_bw()+
-  scale_color_manual(values=c('red','blue'))+
-  labs(title='Representación geométrica de autovalores y autovectores')+
-  ylim(c(0,NA))+
-  xlim(c(0,NA))
+```{r}
+plot_eigen(A)
+```
+
+```{r}
+A <- matrix(c(0,2,2,4), nrow=2, ncol=2)
+plot_eigen(A)
+```
+
+```{r}
+A <- matrix(c(1,2,3,4), nrow=2, ncol=2)
+plot_eigen(A)
 ```
 
 

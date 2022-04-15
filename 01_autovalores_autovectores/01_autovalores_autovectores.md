@@ -58,7 +58,15 @@ autovalores
 
 Notar que si se hace:
 
+``` r
+det(A - autovalores[1]*I)
+```
+
     ## [1] 0
+
+``` r
+det(A - autovalores[2]*I)
+```
 
     ## [1] 0
 
@@ -77,6 +85,14 @@ autovectores
 
 # Volviendo a A x = λ x
 
+``` r
+A %*% autovectores[,1] == matrix(autovectores[,1] * autovalores[1], nrow=2)
+```
+
+    ##      [,1]
+    ## [1,] TRUE
+    ## [2,] TRUE
+
 A x :
 
 ``` r
@@ -87,15 +103,15 @@ AX2 = A %*% autovectores[2,]
 λ x :
 
 ``` r
-XL1 = autovectores[2,] * autovalores[1]
-XL2 = autovectores[1,] * autovalores[2]
+X1L1 = autovectores[1,] * autovalores[1]
+X2L2 = autovectores[2,] * autovalores[2]
 ```
 
 ``` r
-print(XL1)
+print(X1L1)
 ```
 
-    ## [1] 0.7071068 0.7071068
+    ## [1]  0.7071068 -0.7071068
 
 ``` r
 print(AX2)
@@ -106,10 +122,10 @@ print(AX2)
     ## [2,] 0.7071068
 
 ``` r
-print(XL2)
+print(X2L2)
 ```
 
-    ## [1] -0.7071068  0.7071068
+    ## [1] -0.7071068 -0.7071068
 
 ``` r
 print(AX1)
@@ -121,24 +137,10 @@ print(AX1)
 
 # Gráficamente:
 
-Se observa que la pendiente de cada autovector son los autovalores (1 y
--1). Sin embargo, esto solo se cumple en esta matriz.
+Función para obtener autovalores y autovectores:
 
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
-
-Imponiendo una restricción a valores positivos:
-
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
-
-# Otro ejemplo
-
-    ##      [,1] [,2]
-    ## [1,]  0.5  1.0
-    ## [2,]  1.0  0.5
-
-    ## [1]  1.5 -0.5
-
-En este caso, el autovalor positivo es 1.5 y al visualizarlo se observa
-una pendiente del autovector = 1 (tal como el caso anterior).
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
