@@ -1,4 +1,4 @@
-# Ayuda memorias para mi yo del presente y futuro
+# Para tener a mano
  
  1. Autovalores y autovectores
  
