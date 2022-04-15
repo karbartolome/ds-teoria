@@ -1,6 +1,4 @@
-# eco-science
-
- Ayuda memoria para mi yo del presente y futuro
+# Ayuda memorias para mi yo del presente y futuro
  
  1. Autovalores y autovectores
  
