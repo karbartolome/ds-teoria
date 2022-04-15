@@ -36,7 +36,7 @@ A x−λ x = 0
 
 ( A − λ I ) x = 0
 
-\| A − λ I \| = 0 --\> Ecuación característica
+\| A − λ I \| = 0 --\> **Ecuación característica**
 
 ```{r, echo=TRUE}
 A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
@@ -111,7 +111,7 @@ print(AX1)
 
 # Gráficamente: 
 
-```{r}
+```{r, fig.height=5, fig.width=5}
 g <- data.frame(A) %>% 
   ggplot()+
   geom_point(aes(x=X1,y=X2, color='Matriz A'), show.legend = FALSE, size=2)+
@@ -127,12 +127,12 @@ g <- data.frame(A) %>%
   
   geom_labelsegment(aes(x=0, xend=X1, y=0, yend=X2, 
                        label='Matriz A', color='Matriz A'),
-               size = 5, show.legend = FALSE)+
+               size = 3, show.legend = FALSE)+
   
   geom_labelsegment(data = data.frame(autovectores),
                aes(x=0, xend=X1, y=0, yend=X2, 
                    label='Autovectores', color='Autovectores'),
-               size=5, show.legend = FALSE)+
+               size=3, show.legend = FALSE)+
   
   theme_bw()+
   scale_color_manual(values=c('red','blue'))+
@@ -144,7 +144,7 @@ g
 
 Incorporando el límite en R+
 
-```{r}
+```{r, fig.height=5, fig.width=5}
 g +
   ylim(c(0,NA))+
   xlim(c(0,NA))

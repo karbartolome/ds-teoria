@@ -23,7 +23,7 @@ A x−λ x = 0
 
 ( A − λ I ) x = 0
 
-\| A − λ I \| = 0 –\> Ecuación característica
+\| A − λ I \| = 0 –\> **Ecuación característica**
 
 ``` r
 A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
