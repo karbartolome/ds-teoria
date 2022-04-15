@@ -9,22 +9,55 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Matrices en R
 
-```{r}
-M <- matrix(c(1, 0, 3,
-              4,10, 3,
-              1, 4, 1), 
-            nrow = 3, ncol = 3)
-M
-```
+Matriz identidad:
 
 ```{r}
-dim(M)
+I = diag(3)
+I
 ```
 
 # Cálculo de autovalores (eigenvalues)
 
-```{r}
+A x = λ x
 
+A x−λ x = 0  
+( A − λ I ) x = 0
+
+\| A − λ I \| = 0 --\> Ecuación característica
+
+```{r}
+A <- t(matrix(c(1, 1, -2,
+              -1, 2, 1,
+              0, 1, -1), 
+            nrow = 3, ncol = 3))
+A
+```
+
+Si λ = 0 =\> A - 0 \* I :
+
+```{r}
+lambda = 0
+A - lambda * I
+```
+
+Calculando el determinante \| A − λ I \|
+
+```{r}
+det(A - lambda*I)
+```
+
+No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
+
+Calculando los autovalores que resuelvan la ecuación luego de la expansión de Laplace:
+
+```{r}
+eigen(A)$values
+```
+
+Notar que si se hace:
+
+```{r}
+det(A - 2*I)
 ```
 
 # Cálculo de autovectores
