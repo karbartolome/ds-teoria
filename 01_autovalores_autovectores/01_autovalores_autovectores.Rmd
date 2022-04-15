@@ -118,7 +118,7 @@ print(AX1)
 
 # Gráficamente: 
 
-Función para obtener autovalores y autovectores:
+Función para obtener autovalores y autovectores. 
 
 
 ```{r}
@@ -197,23 +197,27 @@ plot_eigen <- function(.matriz){
 }
 ```
 
-Visualizando el ejemplo de la matriz A:
+Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A x = λ x. Además, se ve como AX1 = X1 * un escalar (lambda 1) y lo mismo para X2. 
 
-```{r, fig.height=3, fig.width=5}
+Además, cuando el autovalor es positivo, el autovector se expande en la misma dirección mientras que cuando el autovalor es negativo el autovalor se expande en la dirección opuesta. 
+
+```{r, fig.height=4, fig.width=10}
 plot_eigen(A)
 ```
 
 Considerando una matriz A distinta: 
 
-```{r, fig.height=3, fig.width=5}
+```{r, fig.height=4, fig.width=10}
 A <- matrix(c(0,2,2,4), nrow=2, ncol=2)
+A
 plot_eigen(A)
 ```
 
 Otro ejemplo: 
 
-```{r, fig.height=3, fig.width=5}
+```{r, fig.height=4, fig.width=10}
 A <- matrix(c(1,2,3,4), nrow=2, ncol=2)
+A
 plot_eigen(A)
 ```
 

@@ -139,16 +139,30 @@ print(AX1)
 
 # Gráficamente:
 
-Función para obtener autovalores y autovectores:
+Función para obtener autovalores y autovectores.
 
-Visualizando el ejemplo de la matriz A:
+Visualizando el ejemplo de la matriz A. Se observa que se cumple la
+igualdad A x = λ x. Además, se ve como AX1 = X1 \* un escalar (lambda 1)
+y lo mismo para X2.
+
+Además, cuando el autovalor es positivo, el autovector se expande en la
+misma dirección mientras que cuando el autovalor es negativo el
+autovalor se expande en la dirección opuesta.
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 Considerando una matriz A distinta:
 
+    ##      [,1] [,2]
+    ## [1,]    0    2
+    ## [2,]    2    4
+
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 Otro ejemplo:
+
+    ##      [,1] [,2]
+    ## [1,]    1    3
+    ## [2,]    2    4
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
