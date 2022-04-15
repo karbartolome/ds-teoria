@@ -133,46 +133,63 @@ plot_eigen <- function(.matriz){
   data.frame(.matriz) %>% 
     ggplot()+
     
+    geom_hline(yintercept=0)+
+    geom_vline(xintercept=0)+
+    
     
     # AX
     geom_segment(aes(x=0,xend=AX1[1], y=0, yend=AX1[2], color='A x1 = L1 x1'), 
-                     arrow= arrow(length = unit(0.2, "inches")), 
-                 show.legend = TRUE,size=1)+
+                     arrow= arrow(length = unit(0.1, "inches")), 
+                 show.legend = TRUE,size=0.7)+
   
     
     geom_segment(aes(x=0,xend=AX2[1], y=0, yend=AX2[2], color='A x2 = L2 x2'), 
-                     arrow= arrow(length = unit(0.2, "inches")), 
-                 show.legend = TRUE,size=1)+
+                     arrow= arrow(length = unit(0.1, "inches")), 
+                 show.legend = TRUE,size=0.7)+
 
     
     
     # Matriz A
     geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
-                     arrow= arrow(length = unit(0.2, "inches")), 
-                 show.legend = TRUE,size=1)+
+                     arrow= arrow(length = unit(0.1, "inches")), 
+                 show.legend = TRUE,size=0.7)+
+    
+        
+    # geom_text(aes(x=X1, y=X2, color='Matriz A', 
+    #               label=paste0('A=(',round(X1,2),',',round(X2,2),')')),
+    #           nudge_x=0.1, nudge_y=-0.5, size=3)+
     
     # Autovectores
     geom_segment(data=data.frame(t(autovectores)),
                  aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
-                     arrow= arrow(length = unit(0.2, "inches")), 
-                 show.legend = TRUE, size=1)+
+                     arrow= arrow(length = unit(0.1, "inches")), 
+                 show.legend = TRUE, size=0.7)+
     
-    geom_hline(yintercept=0)+
-    geom_vline(xintercept=0)+
+    # geom_text(data=data.frame(t(autovectores)), 
+    #           aes(x=X1, y=X2, color='Autovectores', 
+    #               label=paste0('V=(',round(X1,1),',',round(X2,1),')')),
+    #           nudge_x=0.1, nudge_y=-0.5, size=3)+
     
     
     theme_bw()+
+    
     scale_color_manual(values=c('A x1 = L1 x1'='red',
                                 'A x2 = L2 x2'='red',
                                 'Matriz A'='green',
                                 'Autovectores'='blue'))+
+    
+    scale_y_continuous(expand = expansion(mult = 0.3))+
+    scale_x_continuous(expand = expansion(mult = 0.3))+
+    
     labs(title='Representación geométrica de autovalores y autovectores',
          subtitle=paste0('Autovalores: ',
                          round(autovalores[1],2),' y ', 
                          round(autovalores[2],2), '\n',
                          'Autovectores:',
-                         '(',paste0(round(autovectores[,1],2), collapse=', '), ') y ',
-                         '(',paste0(round(autovectores[,2],2), collapse=', '),')'),
+                         '(',paste0(round(autovectores[,1],2), 
+                                    collapse=', '), ') y ',
+                         '(',paste0(round(autovectores[,2],2), 
+                                    collapse=', '),')'),
          color = 'Vector')
   
 }
