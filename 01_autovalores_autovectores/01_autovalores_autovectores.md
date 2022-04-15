@@ -1,61 +1,48 @@
-Matrices
+Autovalores y autovectores
 ================
+Karina Bartolomé
 
 # Matrices en R
 
 Matriz identidad:
 
-``` r
-I = diag(3)
-I
-```
+    ##      [,1] [,2]
+    ## [1,]    1    0
+    ## [2,]    0    1
 
-    ##      [,1] [,2] [,3]
-    ## [1,]    1    0    0
-    ## [2,]    0    1    0
-    ## [3,]    0    0    1
+# Autovalores y autovectores
 
-# Cálculo de autovalores (eigenvalues)
+Los autovalores son escalares que al ser multiplicados por un vector no
+negativo se cumple la igualdad:
 
 A x = λ x
 
-A x−λ x = 0  
+# Cálculo de autovalores (eigenvalues)
+
+A x−λ x = 0
+
 ( A − λ I ) x = 0
 
 \| A − λ I \| = 0 –\> Ecuación característica
 
 ``` r
-A <- t(matrix(c(1, 1, -2,
-              -1, 2, 1,
-              0, 1, -1), 
-            nrow = 3, ncol = 3))
+A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
 A
 ```
 
-    ##      [,1] [,2] [,3]
-    ## [1,]    1    1   -2
-    ## [2,]   -1    2    1
-    ## [3,]    0    1   -1
+    ##      [,1] [,2]
+    ## [1,]  0.5  1.0
+    ## [2,]  1.0  0.5
 
-Si λ = 0 =\> A - 0 \* I :
+Si λ = 1 =\> A - 1 \* I :
 
-``` r
-lambda = 0
-A - lambda * I
-```
-
-    ##      [,1] [,2] [,3]
-    ## [1,]    1    1   -2
-    ## [2,]   -1    2    1
-    ## [3,]    0    1   -1
+    ##      [,1] [,2]
+    ## [1,] -0.5  1.0
+    ## [2,]  1.0 -0.5
 
 Calculando el determinante \| A − λ I \|
 
-``` r
-det(A - lambda*I)
-```
-
-    ## [1] -2
+    ## [1] -0.75
 
 No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
 
@@ -63,17 +50,79 @@ Calculando los autovalores que resuelvan la ecuación luego de la
 expansión de Laplace:
 
 ``` r
-eigen(A)$values
+autovalores <- eigen(A)$values
+autovalores
 ```
 
-    ## [1]  2  1 -1
+    ## [1]  1.5 -0.5
 
 Notar que si se hace:
 
-``` r
-det(A - 2*I)
-```
+    ## [1] 0
 
     ## [1] 0
 
 # Cálculo de autovectores
+
+Autovectores:
+
+``` r
+autovectores <- eigen(A)$vectors
+autovectores
+```
+
+    ##           [,1]       [,2]
+    ## [1,] 0.7071068 -0.7071068
+    ## [2,] 0.7071068  0.7071068
+
+# Volviendo a A x = λ x
+
+A x :
+
+``` r
+AX1 = A %*% autovectores[1,]
+AX2 = A %*% autovectores[2,]
+```
+
+λ x :
+
+``` r
+XL1 = autovectores[2,] * autovalores[1]
+XL2 = autovectores[1,] * autovalores[2]
+```
+
+``` r
+print(XL1)
+```
+
+    ## [1] 1.06066 1.06066
+
+``` r
+print(AX2)
+```
+
+    ##         [,1]
+    ## [1,] 1.06066
+    ## [2,] 1.06066
+
+``` r
+print(XL2)
+```
+
+    ## [1] -0.3535534  0.3535534
+
+``` r
+print(AX1)
+```
+
+    ##            [,1]
+    ## [1,] -0.3535534
+    ## [2,]  0.3535534
+
+# Gráficamente:
+
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Incorporando el límite en R+
+
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->

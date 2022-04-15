@@ -1,10 +1,18 @@
 ---
-title: "Matrices"
+title: "Autovalores y autovectores"
+author: "Karina Bartolomé"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE,
+                      warning=FALSE)
+```
+
+
+```{r, message=FALSE}
+library(tidyverse)
+library(geomtextpath)
 ```
 
 # Matrices en R
@@ -12,31 +20,33 @@ knitr::opts_chunk$set(echo = TRUE)
 Matriz identidad:
 
 ```{r}
-I = diag(3)
+I = diag(2)
 I
 ```
 
-# Cálculo de autovalores (eigenvalues)
+# Autovalores y autovectores
+
+Los autovalores son escalares que al ser multiplicados por un vector no negativo se cumple la igualdad: 
 
 A x = λ x
 
+# Cálculo de autovalores (eigenvalues)
+
 A x−λ x = 0  
+
 ( A − λ I ) x = 0
 
 \| A − λ I \| = 0 --\> Ecuación característica
 
-```{r}
-A <- t(matrix(c(1, 1, -2,
-              -1, 2, 1,
-              0, 1, -1), 
-            nrow = 3, ncol = 3))
+```{r, echo=TRUE}
+A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
 A
 ```
 
-Si λ = 0 =\> A - 0 \* I :
+Si λ = 1 =\> A - 1 \* I :
 
 ```{r}
-lambda = 0
+lambda = 1
 A - lambda * I
 ```
 
@@ -50,14 +60,101 @@ No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
 
 Calculando los autovalores que resuelvan la ecuación luego de la expansión de Laplace:
 
-```{r}
-eigen(A)$values
+```{r, echo=TRUE}
+autovalores <- eigen(A)$values
+autovalores
 ```
 
 Notar que si se hace:
 
 ```{r}
-det(A - 2*I)
+det(A - autovalores[1]*I)
 ```
 
+```{r}
+det(A - autovalores[2]*I)
+```
+
+
 # Cálculo de autovectores
+
+Autovectores:
+
+```{r, echo=TRUE}
+autovectores <- eigen(A)$vectors
+autovectores
+```
+
+# Volviendo a A x = λ x
+
+A x : 
+
+```{r, echo=TRUE}
+AX1 = A %*% autovectores[1,]
+AX2 = A %*% autovectores[2,]
+```
+
+λ x : 
+
+```{r, echo=TRUE}
+XL1 = autovectores[2,] * autovalores[1]
+XL2 = autovectores[1,] * autovalores[2]
+```
+
+```{r, echo=TRUE}
+print(XL1)
+print(AX2)
+
+print(XL2)
+print(AX1)
+```
+
+# Gráficamente: 
+
+```{r}
+g <- data.frame(A) %>% 
+  ggplot()+
+  geom_point(aes(x=X1,y=X2, color='Matriz A'), show.legend = FALSE, size=2)+
+  
+  geom_segment(aes(x=0,xend=X1, y=0, yend=X2, color='Matriz A'), 
+                   arrow= arrow(length = unit(0.2, "inches")), 
+               show.legend = FALSE,size=1)+
+  
+  geom_segment(data=data.frame(autovectores),
+               aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
+                   arrow= arrow(length = unit(0.2, "inches")), 
+               show.legend = FALSE, size=1)+
+  
+  geom_labelsegment(aes(x=0, xend=X1, y=0, yend=X2, 
+                       label='Matriz A', color='Matriz A'),
+               size = 5, show.legend = FALSE)+
+  
+  geom_labelsegment(data = data.frame(autovectores),
+               aes(x=0, xend=X1, y=0, yend=X2, 
+                   label='Autovectores', color='Autovectores'),
+               size=5, show.legend = FALSE)+
+  
+  theme_bw()+
+  scale_color_manual(values=c('red','blue'))+
+  labs(title='Representación geométrica de autovalores y autovectores')
+
+g
+```
+
+
+Incorporando el límite en R+
+
+```{r}
+g +
+  ylim(c(0,NA))+
+  xlim(c(0,NA))
+```
+
+
+
+
+
+
+
+
+
