@@ -27,22 +27,25 @@ A x−λ x = 0
 
 ``` r
 A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
+
+A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
+
 A
 ```
 
     ##      [,1] [,2]
-    ## [1,]  0.5  1.0
-    ## [2,]  1.0  0.5
+    ## [1,]    0    1
+    ## [2,]    1    0
 
 Si λ = 1 =\> A - 1 \* I :
 
     ##      [,1] [,2]
-    ## [1,] -0.5  1.0
-    ## [2,]  1.0 -0.5
+    ## [1,]   -1    1
+    ## [2,]    1   -1
 
 Calculando el determinante \| A − λ I \|
 
-    ## [1] -0.75
+    ## [1] 0
 
 No es igual a 0, con lo cual λ = 0 no es un autovalor de la matriz A.
 
@@ -54,7 +57,7 @@ autovalores <- eigen(A)$values
 autovalores
 ```
 
-    ## [1]  1.5 -0.5
+    ## [1]  1 -1
 
 Notar que si se hace:
 
@@ -95,34 +98,37 @@ XL2 = autovectores[1,] * autovalores[2]
 print(XL1)
 ```
 
-    ## [1] 1.06066 1.06066
+    ## [1] 0.7071068 0.7071068
 
 ``` r
 print(AX2)
 ```
 
-    ##         [,1]
-    ## [1,] 1.06066
-    ## [2,] 1.06066
+    ##           [,1]
+    ## [1,] 0.7071068
+    ## [2,] 0.7071068
 
 ``` r
 print(XL2)
 ```
 
-    ## [1] -0.3535534  0.3535534
+    ## [1] -0.7071068  0.7071068
 
 ``` r
 print(AX1)
 ```
 
     ##            [,1]
-    ## [1,] -0.3535534
-    ## [2,]  0.3535534
+    ## [1,] -0.7071068
+    ## [2,]  0.7071068
 
 # Gráficamente:
 
+Se observa que la pendiente de los autovectores son los autovalores (1 y
+-1).
+
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-Incorporando el límite en R+
+Imponiendo una restricción a valores positivos:
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->

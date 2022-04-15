@@ -40,6 +40,9 @@ A x−λ x = 0
 
 ```{r, echo=TRUE}
 A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
+
+A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
+
 A
 ```
 
@@ -111,6 +114,8 @@ print(AX1)
 
 # Gráficamente: 
 
+Se observa que la pendiente de los autovectores son los autovalores (`r autovalores[1]` y `r autovalores[2]`). 
+
 ```{r, fig.height=5, fig.width=5}
 g <- data.frame(A) %>% 
   ggplot()+
@@ -140,7 +145,7 @@ g
 ```
 
 
-Incorporando el límite en R+
+Imponiendo una restricción a valores positivos: 
 
 ```{r, fig.height=5, fig.width=5}
 g +
