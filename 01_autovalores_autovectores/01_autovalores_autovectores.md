@@ -26,10 +26,7 @@ A x−λ x = 0
 \| A − λ I \| = 0 –\> **Ecuación característica**
 
 ``` r
-A <- t(matrix(c(0.5, 1, 1, 0.5), nrow = 2, ncol = 2))
-
 A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
-
 A
 ```
 
@@ -124,11 +121,24 @@ print(AX1)
 
 # Gráficamente:
 
-Se observa que la pendiente de los autovectores son los autovalores (1 y
--1).
+Se observa que la pendiente de cada autovector son los autovalores (1 y
+-1). Sin embargo, esto solo se cumple en esta matriz.
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 Imponiendo una restricción a valores positivos:
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+# Otro ejemplo
+
+    ##      [,1] [,2]
+    ## [1,]  0.5  1.0
+    ## [2,]  1.0  0.5
+
+    ## [1]  1.5 -0.5
+
+En este caso, el autovalor positivo es 1.5 y al visualizarlo se observa
+una pendiente del autovector = 1 (tal como el caso anterior).
+
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
