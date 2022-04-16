@@ -10,6 +10,19 @@ Matriz identidad:
     ## [1,]    1    0
     ## [2,]    0    1
 
+Se define una matriz A (m x n):
+
+``` r
+A <- t(matrix(c(0, 1, 
+                1, 0), 
+              nrow = 2, ncol = 2))
+A
+```
+
+    ##      [,1] [,2]
+    ## [1,]    0    1
+    ## [2,]    1    0
+
 # Autovalores y autovectores
 
 Los autovalores son escalares que al ser multiplicados por un vector no
@@ -19,22 +32,14 @@ A x = λ x
 
 # Cálculo de autovalores (eigenvalues)
 
+Existen tantos autovalores como número de filas (m) o columnas (n) tiene
+la matriz original.
+
 A x−λ x = 0
 
 ( A − λ I ) x = 0
 
 \| A − λ I \| = 0 –\> **Ecuación característica**
-
-Se define una matriz A:
-
-``` r
-A <- t(matrix(c(0, 1, 1, 0), nrow = 2, ncol = 2))
-A
-```
-
-    ##      [,1] [,2]
-    ## [1,]    0    1
-    ## [2,]    1    0
 
 Si λ = 3 =\> A - 3 \* I :
 
