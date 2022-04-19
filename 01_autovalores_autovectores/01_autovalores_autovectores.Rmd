@@ -135,23 +135,24 @@ round(A %*% autovectores[,1],3) == round(matrix(autovectores[,1] *
 A V :
 
 ```{r, echo=TRUE}
-AX1 = A %*% autovectores[1,]
-AX2 = A %*% autovectores[2,]
+AX1 = A %*% autovectores[,1]
+AX2 = A %*% autovectores[,2]
 ```
 
 λ V :
 
 ```{r, echo=TRUE}
-X1L1 = autovectores[1,] * autovalores[1]
-X2L2 = autovectores[2,] * autovalores[2]
+X1L1 = autovectores[,1] * autovalores[1]
+X2L2 = autovectores[,2] * autovalores[2]
 ```
 
 ```{r, echo=TRUE}
 print(X1L1)
-print(AX2)
+print(AX1)
 
 print(X2L2)
-print(AX1)
+print(AX2)
+
 ```
 
 # Gráficamente:
