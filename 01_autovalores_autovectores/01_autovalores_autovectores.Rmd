@@ -1,5 +1,5 @@
 ---
-title: "Autovalores y autovectores"
+title: "Autovalores y autovectores "
 author: "Karina Bartolomé"
 output: github_document
 ---
@@ -9,15 +9,13 @@ knitr::opts_chunk$set(echo = FALSE,
                       warning=FALSE)
 ```
 
-
 ```{r, message=FALSE}
 library(tidyverse)
-library(geomtextpath)
 ```
 
 # Matrices en R:
 
-Matriz identidad:
+Matriz identidad de 2x2:
 
 ```{r}
 I = diag(2)
@@ -27,29 +25,64 @@ I
 Se define una matriz A (m x n):
 
 ```{r, echo=TRUE}
-A <- t(matrix(c(0, 1, 
-                1, 0), 
+A <- t(matrix(c(0, 2, 
+                2, 4), 
               nrow = 2, ncol = 2))
 A
 ```
 
+Gráficamente:
+
+```{r}
+ data.frame(A) %>% 
+    ggplot()+
+    
+    geom_hline(yintercept=0)+
+    geom_vline(xintercept=0)+
+    
+    geom_segment(aes(x=0,xend=X1, y=0, yend=X2), 
+                     arrow= arrow(length = unit(0.1, "inches")), 
+                 show.legend = TRUE,size=0.9, color='red')+
+  
+    geom_text(aes(x=X1, y=X2, 
+                  label=paste0('A=(',round(X1,2),',',round(X2,2),')')),
+              nudge_x=0.2, nudge_y=0.1, size=3, color='red')+
+    
+    theme_bw()+
+  
+    scale_y_continuous(expand = expansion(mult = 0.3))+
+    scale_x_continuous(expand = expansion(mult = 0.3))+
+    
+    labs(title='Representación de la matriz A en dos ejes')
+```
+
 # Autovalores y autovectores
 
-Los autovalores son escalares que al ser multiplicados por un vector no negativo se cumple la igualdad: 
+Dados
+
+$A ∈ 𝚁_{nxn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{nx1}$
+
+Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector **V** (**autovector**) no nulo tal que:
 
 A x = λ x
 
 # Cálculo de autovalores (eigenvalues)
 
-Existen tantos autovalores como número de filas (m) o columnas (n) tiene la matriz original. 
+Existen tantos autovalores como número de filas (m) o columnas (n) tiene la matriz original.
 
-A x−λ x = 0  
+A x−λ x = 0
 
 ( A − λ I ) x = 0
 
-\| A − λ I \| = 0 --\> **Ecuación característica**
+\| A − λ I \| = 0 --\> **Ecuación característica de la matriz A**
 
-Si λ = 3 =\> A - 3 \* I :
+En donde
+
+p(λ)=\|A–λI\| es un polinomio de grado n dependiente de λ --\> **polinomio característico de la matriz** A**A**  
+
+---
+
+Si λ = 2 =\> A - 2 \* I :
 
 ```{r}
 lambda = 2
@@ -81,7 +114,6 @@ det(A - autovalores[1]*I)
 det(A - autovalores[2]*I)
 ```
 
-
 # Cálculo de autovectores
 
 Autovectores:
@@ -94,18 +126,18 @@ autovectores
 # Volviendo a A x = λ x
 
 ```{r, echo=TRUE}
-A %*% autovectores[,1] == matrix(autovectores[,1] * autovalores[1], nrow=2)
+round(A %*% autovectores[,1],3) == round(matrix(autovectores[,1] * 
+                                            autovalores[1], nrow=2),3)
 ```
 
-
-A x : 
+A x :
 
 ```{r, echo=TRUE}
 AX1 = A %*% autovectores[1,]
 AX2 = A %*% autovectores[2,]
 ```
 
-λ x : 
+λ x :
 
 ```{r, echo=TRUE}
 X1L1 = autovectores[1,] * autovalores[1]
@@ -120,10 +152,7 @@ print(X2L2)
 print(AX1)
 ```
 
-# Gráficamente: 
-
-Función para obtener autovalores y autovectores. 
-
+# Gráficamente:
 
 ```{r}
 plot_eigen <- function(.matriz){
@@ -160,21 +189,13 @@ plot_eigen <- function(.matriz){
                      arrow= arrow(length = unit(0.1, "inches")), 
                  show.legend = TRUE,size=0.7)+
     
-        
-    # geom_text(aes(x=X1, y=X2, color='Matriz A', 
-    #               label=paste0('A=(',round(X1,2),',',round(X2,2),')')),
-    #           nudge_x=0.1, nudge_y=-0.5, size=3)+
+      
     
     # Autovectores
     geom_segment(data=data.frame(t(autovectores)),
                  aes(x=0,xend=X1, y=0, yend=X2, color='Autovectores'), 
                      arrow= arrow(length = unit(0.1, "inches")), 
                  show.legend = TRUE, size=0.7)+
-    
-    # geom_text(data=data.frame(t(autovectores)), 
-    #           aes(x=X1, y=X2, color='Autovectores', 
-    #               label=paste0('V=(',round(X1,1),',',round(X2,1),')')),
-    #           nudge_x=0.1, nudge_y=-0.5, size=3)+
     
     
     theme_bw()+
@@ -187,7 +208,7 @@ plot_eigen <- function(.matriz){
     scale_y_continuous(expand = expansion(mult = 0.3))+
     scale_x_continuous(expand = expansion(mult = 0.3))+
     
-    labs(title='Representación geométrica de autovalores y autovectores',
+    labs(title='Representación de autovalores y autovectores',
          subtitle=paste0('Autovalores: ',
                          round(autovalores[1],2),' y ', 
                          round(autovalores[2],2), '\n',
@@ -201,32 +222,26 @@ plot_eigen <- function(.matriz){
 }
 ```
 
-Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A x = λ x. Además, se ve como AX1 = X1 * un escalar (lambda 1) y lo mismo para X2. 
+Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A x = λ x. Además, se ve como AX1 = X1 \* un escalar (lambda 1) y lo mismo para X2.
 
-Además, cuando el autovalor es positivo, el autovector se expande en la misma dirección mientras que cuando el autovalor es negativo el autovalor se expande en la dirección opuesta. 
+Además, cuando el autovalor es positivo, el autovector se expande en la misma dirección mientras que cuando el autovalor es negativo el autovalor se expande en la dirección opuesta.
 
 ```{r, fig.height=4, fig.width=10}
 plot_eigen(A)
 ```
 
-Considerando una matriz A distinta: 
+Considerando una matriz A distinta:
 
 ```{r, fig.height=4, fig.width=10}
-A <- matrix(c(0,2,2,4), nrow=2, ncol=2)
+A <- matrix(c(3,2,1,4), nrow=2, ncol=2)
 A
 plot_eigen(A)
 ```
 
-Otro ejemplo: 
+Otro ejemplo:
 
 ```{r, fig.height=4, fig.width=10}
 A <- matrix(c(1,2,3,4), nrow=2, ncol=2)
 A
 plot_eigen(A)
 ```
-
-
-
-
-
-
