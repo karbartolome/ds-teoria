@@ -31,7 +31,7 @@ Gráficamente:
 
 Dados
 
-*A* ∈ *𝚁*<sub>*n**x**n*</sub> , *λ* ∈ *𝚁* , *V* ∈ *𝚁*<sub>*n**x*1</sub>
+*A* ∈ *𝚁*<sub>*n**n*</sub> , *λ* ∈ *𝚁* , *V* ∈ *𝚁*<sub>*n*1</sub>
 
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector
 **V** (**autovector**) no nulo tal que:
@@ -91,6 +91,8 @@ det(A - autovalores[2]*I)
 ```
 
     ## [1] 0
+
+(puede no dar 0 exacto por redondeos en el cálculo de los autovalores)
 
 # Cálculo de autovectores
 
@@ -165,9 +167,9 @@ igualdad A V = λ V.
 
 Además, se ve como para cada autovector (X1 y X2):
 
-*A**X*<sub>1</sub> = *λ*<sub>1</sub>*X*<sub>1</sub>
+*A* \* *X*<sub>1</sub> = *λ*<sub>1</sub> \* *X*<sub>1</sub>
 
-*A**X*<sub>2</sub> = *λ*<sub>2</sub>*X*<sub>2</sub>
+*A* \* *X*<sub>2</sub> = *λ*<sub>2</sub> \* *X*<sub>2</sub>
 
 Cuando el autovalor es positivo, el autovector V se expande en la misma
 dirección mientras que cuando el autovalor es negativo el autovector V

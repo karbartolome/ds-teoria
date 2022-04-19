@@ -60,7 +60,7 @@ Gráficamente:
 
 Dados
 
-$A ∈ 𝚁_{nxn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{nx1}$
+$A ∈ 𝚁_{nn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{n1}$
 
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector **V** (**autovector**) no nulo tal que:
 
@@ -113,6 +113,8 @@ det(A - autovalores[1]*I)
 ```{r, echo=TRUE}
 det(A - autovalores[2]*I)
 ```
+
+(puede no dar 0 exacto por redondeos en el cálculo de los autovalores)
 
 # Cálculo de autovectores
 
@@ -226,9 +228,9 @@ Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A V
 
 Además, se ve como para cada autovector (X1 y X2):
 
-$$AX_1=λ_1X_1$$
+$$A * X_1=λ_1*X_1$$
 
-$$AX_2=λ_2X_2$$
+$$A * X_2=λ_2*X_2$$
 
 Cuando el autovalor es positivo, el autovector V se expande en la misma dirección mientras que cuando el autovalor es negativo el autovector V se expande en la dirección opuesta.
 
