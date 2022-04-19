@@ -164,9 +164,9 @@ Visualizando el ejemplo de la matriz A. Se observa que se cumple la
 igualdad A x = λ x. Además, se ve como AX1 = X1 \* un escalar (lambda 1)
 y lo mismo para X2.
 
-Además, cuando el autovalor es positivo, el autovector se expande en la
-misma dirección mientras que cuando el autovalor es negativo el
-autovalor se expande en la dirección opuesta.
+Además, cuando el autovalor es positivo, el vector se expande en la
+misma dirección mientras que cuando el autovalor es negativo el vector
+se expande en la dirección opuesta.
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
