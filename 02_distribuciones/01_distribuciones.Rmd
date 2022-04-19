@@ -12,7 +12,6 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{r, message=FALSE}
 library(tidyverse)
-library(gt)
 
 source(here::here('','functions/distribuciones.R'))
 ```
@@ -105,7 +104,7 @@ r_random <- gen_rand_distributions(
 r_random %>% 
   group_by(sample_number) %>% 
   summarise(mean=mean(value), sd=sd(value)) %>% 
-  gt()
+  knitr::kable()
 ```
 
 
