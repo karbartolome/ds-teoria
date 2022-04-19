@@ -12,10 +12,22 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{r, message=FALSE}
 library(tidyverse)
-library(geomtextpath)
+library(gt)
 
 source(here::here('','functions/distribuciones.R'))
 ```
+
+```{r, echo=FALSE}
+options(
+  ggplot2.discrete.colour = scale_color_viridis_d,
+  ggplot2.discrete.fill   = scale_fill_viridis_d,
+  ggplot2.continous.color = scale_color_viridis_c,
+  ggplot2.continous.fill  = scale_fill_viridis_c
+)
+
+theme_set(theme_minimal())
+```
+
 
 ```{r}
 N         = 100
@@ -52,9 +64,6 @@ ggplot()+
   geom_line(aes(x=valores, y=d_normal, color='Densidad N(0,1)'))+
   geom_line(aes(x=valores, y=p_normal, color='Acumulada N(0,1)'))+
   
-  scale_color_manual(values=c('red','blue','green'))+
-
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución normal',
        substitle='Densidad, aleatoria y acumulada',
@@ -77,9 +86,6 @@ data.frame(x = c(-5, 5)) %>%
                   args = list(mean = 0, sd = 1), 
                   aes(color='Acumulada N(0,1)')) + 
   
-    scale_color_manual(values=c('red','blue','green'))+
-
-    theme_minimal()+
     labs(color='Distribución')
 ```
 
@@ -97,21 +103,19 @@ r_random <- gen_rand_distributions(
 
 ```{r}
 r_random %>% 
-  group_by(name) %>% 
-  summarise(mean=mean(value), sd=sd(value))
+  group_by(sample_number) %>% 
+  summarise(mean=mean(value), sd=sd(value)) %>% 
+  gt()
 ```
 
 
 ```{r}
 ggplot()+
   
-  geom_density(data=r_random, aes(x=value, color=name))+
+  geom_density(data=r_random, aes(x=value, color=sample_number))+
   
   geom_vline(xintercept=0)+
   
-  scale_color_manual(values=c('red','blue','green'))+
-
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución normal',
        substitle='Densidad, aleatoria y acumulada',
@@ -131,34 +135,42 @@ d_poisson <- dpois(valores, lambda = lambda)
 p_poisson <- ppois(valores, lambda = lambda)
 ```
 
-
 ```{r}
 ggplot()+
   
-  geom_line(aes(x=valores, y=d_poisson, color='Densidad Poisson(1)'))+
-  geom_line(aes(x=valores, y=p_poisson, color='Acumulada Poisson(1)'))+
+  geom_col(aes(x=factor(valores), y=d_poisson, 
+               color='Densidad Poisson(1)',
+               fill='Densidad Poisson(1)'), alpha=0.7)+
+  geom_line(aes(x=valores, y=p_poisson, 
+                color='Acumulada Poisson(1)', 
+                fill='Acumulada Poisson(1)'))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución poisson',
        substitle='Densidad, aleatoria y acumulada',
-       color='Distribución'
+       color='Distribución', fill='Distribución'
   )
 ```
+
 
 ```{r}
 r_poisson <- gen_rand_distributions(.distribution=rpois,
                        .n_obs=N,
                        .n_samples=N_samples, 
                        lambda=lambda)
+```
 
+
+```{r}
 ggplot()+
-  geom_histogram(data=r_poisson, 
-               aes(x=factor(value), fill=name), 
-               stat='count',
+  geom_bar(data=r_poisson,
+               aes(x=factor(value), fill=sample_number),
                position='dodge',
                alpha=0.7)+
-  theme_minimal()
+
+  labs(x='Valor',y='Frecuencia',fill='Muestra',
+       title = 'Distribución poisson aleatoria: \nFrecuencia de valores en cada muestra aleatoria',
+       subtitle=paste0('Lambda=',lambda))
 ```
 
 
@@ -177,7 +189,6 @@ ggplot()+
   geom_line(aes(x=valores, y=d_expo, color='Densidad Exp(1)'))+
   geom_line(aes(x=valores, y=p_expo, color='Acumulada Exp(1)'))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución Exponencial',
        substitle='Densidad, aleatoria y acumulada',
@@ -197,11 +208,8 @@ r_expo <- gen_rand_distributions(
 ```{r}
 ggplot()+
   
-  geom_density(data=r_expo, aes(x=value, color=name))+
-  
-  scale_color_manual(values=c('red','blue','green'))+
+  geom_density(data=r_expo, aes(x=value, color=sample_number))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución exponencial random',
        color='Distribución'
@@ -224,7 +232,6 @@ ggplot()+
   geom_line(aes(x=valores, y=d_expo, color='Densidad Gamma(1)'))+
   geom_line(aes(x=valores, y=p_expo, color='Acumulada Gamma(1)'))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución Gamma',
        substitle='Densidad, aleatoria y acumulada',
@@ -245,11 +252,8 @@ r_gamma <- gen_rand_distributions(
 ```{r}
 ggplot()+
   
-  geom_density(data=r_gamma, aes(x=value, color=name))+
-  
-  scale_color_manual(values=c('red','blue','green'))+
+  geom_density(data=r_gamma, aes(x=value, color=sample_number))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución gamma random',
        color='Distribución'
@@ -271,7 +275,6 @@ ggplot()+
   geom_line(aes(x=valores, y=d_chi, color='Densidad Chi(df=2)'))+
   geom_line(aes(x=valores, y=p_chi, color='Acumulada Chi(df=2)'))+
 
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución Chi-Cuadrado',
        substitle='Densidad, aleatoria y acumulada',
@@ -291,11 +294,8 @@ r_chi <- gen_rand_distributions(
 ```{r}
 ggplot()+
   
-  geom_density(data=r_chi, aes(x=value, color=name))+
+  geom_density(data=r_chi, aes(x=value, color=sample_number))+
   
-  scale_color_manual(values=c('red','blue','green'))+
-
-  theme_minimal()+
   labs(x='X', y='Probabilidad', 
        title='Distribución Chi Cuadrado random',
        color='Distribución'
