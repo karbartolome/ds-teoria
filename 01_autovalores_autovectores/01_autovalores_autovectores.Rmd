@@ -22,16 +22,25 @@ I = diag(2)
 I
 ```
 
-Se define una matriz A (m x n):
+Se define una matriz A (n x n):
 
 ```{r, echo=TRUE}
-A <- t(matrix(c(0, 2, 
-                2, 4), 
-              nrow = 2, ncol = 2))
+A <- matrix(c(0, 2, 
+              2, 4), 
+              nrow = 2, ncol = 2)
 A
 ```
 
-Gráficamente:
+Por propiedades de matrices, si se quiere multiplicar la matriz A por un vector de n filas, es necesario hacerlo en el orden A\*X:
+
+```{r, echo=TRUE}
+X <- matrix(c(1,2),nrow=2)
+A %*% X
+```
+
+No se puede multiplicar X\*A (n x 1 \* n x n)
+
+**Gráficamente:**
 
 ```{r}
  data.frame(A) %>% 
@@ -60,7 +69,7 @@ Gráficamente:
 
 Dados
 
-$A ∈ 𝚁_{nn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{n1}$
+$A ∈ 𝚁_{nxn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{n1}$
 
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector **V** (**autovector**) no nulo tal que:
 
@@ -68,7 +77,7 @@ A V = λ V
 
 # Cálculo de autovalores (eigenvalues)
 
-Existen tantos autovalores como número de filas (m) o columnas (n) tiene la matriz original.
+Existen tantos autovalores como número de filas (n) o columnas (n) tiene la matriz original.
 
 A V −λ V = 0
 
@@ -146,13 +155,16 @@ X1L1 = autovectores[,1] * autovalores[1]
 X2L2 = autovectores[,2] * autovalores[2]
 ```
 
+Se verifican las igualdades:
+
 ```{r, echo=TRUE}
 print(X1L1)
 print(AX1)
+```
 
+```{r}
 print(X2L2)
 print(AX2)
-
 ```
 
 # Gráficamente:

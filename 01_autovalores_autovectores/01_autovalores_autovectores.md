@@ -10,12 +10,12 @@ Matriz identidad de 2x2:
     ## [1,]    1    0
     ## [2,]    0    1
 
-Se define una matriz A (m x n):
+Se define una matriz A (n x n):
 
 ``` r
-A <- t(matrix(c(0, 2, 
-                2, 4), 
-              nrow = 2, ncol = 2))
+A <- matrix(c(0, 2, 
+              2, 4), 
+              nrow = 2, ncol = 2)
 A
 ```
 
@@ -23,15 +23,29 @@ A
     ## [1,]    0    2
     ## [2,]    2    4
 
-Gráficamente:
+Por propiedades de matrices, si se quiere multiplicar la matriz A por un
+vector de n filas, es necesario hacerlo en el orden A\*X:
 
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+``` r
+X <- matrix(c(1,2),nrow=2)
+A %*% X
+```
+
+    ##      [,1]
+    ## [1,]    4
+    ## [2,]   10
+
+No se puede multiplicar X\*A (n x 1 \* n x n)
+
+**Gráficamente:**
+
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 # Autovalores y autovectores
 
 Dados
 
-*A* ∈ *𝚁*<sub>*n**n*</sub> , *λ* ∈ *𝚁* , *V* ∈ *𝚁*<sub>*n*1</sub>
+*A* ∈ *𝚁*<sub>*n**x**n*</sub> , *λ* ∈ *𝚁* , *V* ∈ *𝚁*<sub>*n*1</sub>
 
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector
 **V** (**autovector**) no nulo tal que:
@@ -40,7 +54,7 @@ A V = λ V
 
 # Cálculo de autovalores (eigenvalues)
 
-Existen tantos autovalores como número de filas (m) o columnas (n) tiene
+Existen tantos autovalores como número de filas (n) o columnas (n) tiene
 la matriz original.
 
 A V −λ V = 0
@@ -132,6 +146,8 @@ X1L1 = autovectores[,1] * autovalores[1]
 X2L2 = autovectores[,2] * autovalores[2]
 ```
 
+Se verifican las igualdades:
+
 ``` r
 print(X1L1)
 ```
@@ -146,15 +162,7 @@ print(AX1)
     ## [1,] 1.847759
     ## [2,] 4.460885
 
-``` r
-print(X2L2)
-```
-
     ## [1]  0.7653669 -0.3170253
-
-``` r
-print(AX2)
-```
 
     ##            [,1]
     ## [1,]  0.7653669
@@ -175,7 +183,7 @@ Cuando el autovalor es positivo, el autovector V se expande en la misma
 dirección mientras que cuando el autovalor es negativo el autovector V
 se expande en la dirección opuesta.
 
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 Considerando una matriz A distinta:
 
@@ -183,7 +191,7 @@ Considerando una matriz A distinta:
     ## [1,]    3    1
     ## [2,]    2    4
 
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 Otro ejemplo:
 
@@ -191,7 +199,7 @@ Otro ejemplo:
     ## [1,]    1    3
     ## [2,]    2    4
 
-![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 # Links
 
