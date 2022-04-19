@@ -36,23 +36,23 @@ Dados
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector
 **V** (**autovector**) no nulo tal que:
 
-A x = λ x
+A V = λ V
 
 # Cálculo de autovalores (eigenvalues)
 
 Existen tantos autovalores como número de filas (m) o columnas (n) tiene
 la matriz original.
 
-A x−λ x = 0
+A V −λ V = 0
 
-( A − λ I ) x = 0
+( A − λ I ) V = 0
 
 \| A − λ I \| = 0 –\> **Ecuación característica de la matriz A**
 
 En donde
 
 p(λ)=\|A–λI\| es un polinomio de grado n dependiente de λ –\>
-**polinomio característico de la matriz** A**A**
+**polinomio característico de la matriz A**
 
 ------------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ autovectores
     ## [1,] 0.3826834 -0.9238795
     ## [2,] 0.9238795  0.3826834
 
-# Volviendo a A x = λ x
+# Volviendo a A V = λ V
 
 ``` r
 round(A %*% autovectores[,1],3) == round(matrix(autovectores[,1] * 
@@ -116,14 +116,14 @@ round(A %*% autovectores[,1],3) == round(matrix(autovectores[,1] *
     ## [1,] TRUE
     ## [2,] TRUE
 
-A x :
+A V :
 
 ``` r
 AX1 = A %*% autovectores[1,]
 AX2 = A %*% autovectores[2,]
 ```
 
-λ x :
+λ V :
 
 ``` r
 X1L1 = autovectores[1,] * autovalores[1]
@@ -161,11 +161,16 @@ print(AX1)
 # Gráficamente:
 
 Visualizando el ejemplo de la matriz A. Se observa que se cumple la
-igualdad A x = λ x. Además, se ve como AX1 = X1 \* un escalar (lambda 1)
-y lo mismo para X2.
+igualdad A V = λ V.
 
-Además, cuando el autovalor es positivo, el vector se expande en la
-misma dirección mientras que cuando el autovalor es negativo el vector
+Además, se ve como para cada autovector (X1 y X2):
+
+*A**X*<sub>1</sub> = *λ*<sub>1</sub>*X*<sub>1</sub>
+
+*A**X*<sub>2</sub> = *λ*<sub>2</sub>*X*<sub>2</sub>
+
+Cuando el autovalor es positivo, el autovector V se expande en la misma
+dirección mientras que cuando el autovalor es negativo el autovector V
 se expande en la dirección opuesta.
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
@@ -185,3 +190,8 @@ Otro ejemplo:
     ## [2,]    2    4
 
 ![](01_autovalores_autovectores_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+# Links
+
+[Eigenvectors and Eigenvalues Explained
+Visually](https://setosa.io/ev/eigenvectors-and-eigenvalues/)

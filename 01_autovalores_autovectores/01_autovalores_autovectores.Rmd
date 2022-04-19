@@ -64,23 +64,23 @@ $A ∈ 𝚁_{nxn}$ , $λ ∈ 𝚁$ , $V ∈ 𝚁_{nx1}$
 
 Se dice que **λ** es un **autovalor** de A si y sólo si existe un vector **V** (**autovector**) no nulo tal que:
 
-A x = λ x
+A V = λ V
 
 # Cálculo de autovalores (eigenvalues)
 
 Existen tantos autovalores como número de filas (m) o columnas (n) tiene la matriz original.
 
-A x−λ x = 0
+A V −λ V = 0
 
-( A − λ I ) x = 0
+( A − λ I ) V = 0
 
 \| A − λ I \| = 0 --\> **Ecuación característica de la matriz A**
 
 En donde
 
-p(λ)=\|A–λI\| es un polinomio de grado n dependiente de λ --\> **polinomio característico de la matriz** A**A**  
+p(λ)=\|A–λI\| es un polinomio de grado n dependiente de λ --\> **polinomio característico de la matriz A**
 
----
+------------------------------------------------------------------------
 
 Si λ = 2 =\> A - 2 \* I :
 
@@ -123,21 +123,21 @@ autovectores <- eigen(A)$vectors
 autovectores
 ```
 
-# Volviendo a A x = λ x
+# Volviendo a A V = λ V
 
 ```{r, echo=TRUE}
 round(A %*% autovectores[,1],3) == round(matrix(autovectores[,1] * 
                                             autovalores[1], nrow=2),3)
 ```
 
-A x :
+A V :
 
 ```{r, echo=TRUE}
 AX1 = A %*% autovectores[1,]
 AX2 = A %*% autovectores[2,]
 ```
 
-λ x :
+λ V :
 
 ```{r, echo=TRUE}
 X1L1 = autovectores[1,] * autovalores[1]
@@ -222,9 +222,15 @@ plot_eigen <- function(.matriz){
 }
 ```
 
-Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A x = λ x. Además, se ve como AX1 = X1 \* un escalar (lambda 1) y lo mismo para X2.
+Visualizando el ejemplo de la matriz A. Se observa que se cumple la igualdad A V = λ V.
 
-Además, cuando el autovalor es positivo, el vector se expande en la misma dirección mientras que cuando el autovalor es negativo el vector se expande en la dirección opuesta.
+Además, se ve como para cada autovector (X1 y X2):
+
+$$AX_1=λ_1X_1$$
+
+$$AX_2=λ_2X_2$$
+
+Cuando el autovalor es positivo, el autovector V se expande en la misma dirección mientras que cuando el autovalor es negativo el autovector V se expande en la dirección opuesta.
 
 ```{r, fig.height=4, fig.width=10}
 plot_eigen(A)
@@ -233,7 +239,8 @@ plot_eigen(A)
 Considerando una matriz A distinta:
 
 ```{r, fig.height=4, fig.width=10}
-A <- matrix(c(3,2,1,4), nrow=2, ncol=2)
+A <- matrix(c(3,2,
+              1,4), nrow=2, ncol=2)
 A
 plot_eigen(A)
 ```
@@ -241,7 +248,12 @@ plot_eigen(A)
 Otro ejemplo:
 
 ```{r, fig.height=4, fig.width=10}
-A <- matrix(c(1,2,3,4), nrow=2, ncol=2)
+A <- matrix(c(1,2,
+              3,4), nrow=2, ncol=2)
 A
 plot_eigen(A)
 ```
+
+# Links
+
+[Eigenvectors and Eigenvalues Explained Visually](https://setosa.io/ev/eigenvectors-and-eigenvalues/)
