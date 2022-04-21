@@ -13,24 +13,26 @@
 #' @examples
 #' 
 #' # Se generan 3 muestras de 1000 observaciones cada una, considerando una distribución normal con media 0 y desvío 1
-#' r_norm <- gen_rand_distributions(.distribution=rnorm, 
-#'                                  .n_obs=1000, 
-#'                                  .n_samples=3, 
-#'                                  mean=0, sd=1,
-#'                                  .plot=FALSE)
-#' 
-#' # Para corroborar, se agrupa por la muestra y se calcula el promedio y desvío 
-#' # Se observa que el promedio se aproxima a 0 y el desvío se aproxima a 1
-#' r_norm %>% 
-#'   group_by(name) %>% 
-#'   summarise(mean=mean(value), 
-#'             sd=sd(value))
-gen_rand_distributions <- function(.distribution_random,
-                                   .distribution_density,
+#'r_norm <- gen_rand_distributions(.distribution = 'norm',
+#'                                 .n_obs=1000,
+#'                                 .n_samples=3, .plot=FALSE,
+#'                                 mean=0, sd=1,
+#')
+#'
+#'# Para corroborar, se agrupa por la muestra y se calcula el promedio y desvío
+#'# Se observa que el promedio se aproxima a 0 y el desvío se aproxima a 1
+#'r_norm %>%
+#'  group_by(sample_number) %>%
+#'  summarise(mean=mean(value),
+#'            sd=sd(value))
+gen_rand_distributions <- function(.distribution,
                                    .n_obs, .n_samples, 
                                    .seed = 42, .plot = TRUE, ...){
   
-  distribucion <- get_title(.function=deparse(substitute(.distribution_density)))
+  .distribution_random <- get(paste0('r',.distribution))
+  .distribution_density <- get(paste0('d',.distribution))
+  
+  titulo <- get_title(paste0('r',.distribution))
   
   args <- as.list(substitute(list(...)))[-1L]
   params <- paste0(names(args), "=", args, collapse = ", ")
@@ -54,7 +56,7 @@ gen_rand_distributions <- function(.distribution_random,
       stat_function(fun = .distribution_density, n = .n_obs,
                     args = list(...), color='#61d92e', size=1.2) +
       labs(x='x', y='f(x)', 
-           title=paste0("<span style='color:black'>",distribucion,"</span>",
+           title=paste0("<span style='color:black'>",titulo,"</span>",
                         "<span style='color:#61d92e'>  (",params,")</span>"), 
            subtitle = paste0("<span style='color:darkgrey'>", .n_samples,
                              ' distribuciones aleatorias de ',.n_obs,
@@ -68,6 +70,7 @@ gen_rand_distributions <- function(.distribution_random,
     distributions
   }
 }
+
 
 
 

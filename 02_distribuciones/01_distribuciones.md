@@ -78,9 +78,10 @@ observaciones:
 
 ``` r
 r_random <- gen_rand_distributions(
-                       .distribution = rnorm,
+                       .distribution_random = rnorm,
+                       .distribution_density = dnorm,
                        .n_obs        = N,
-                       .n_samples    = N_samples, 
+                       .n_samples    = N_samples, .plot=FALSE,
                        mean = 0, sd = 1
                        )
 ```
@@ -144,9 +145,11 @@ ggplot()+
 ![](01_distribuciones_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
-r_poisson <- gen_rand_distributions(.distribution=rpois,
+r_poisson <- gen_rand_distributions(                                  
+                       .distribution_random = rpois,
+                       .distribution_density = dpois,
                        .n_obs=N,
-                       .n_samples=N_samples, 
+                       .n_samples=N_samples, .plot=FALSE,
                        lambda=lambda)
 ```
 
@@ -189,9 +192,10 @@ ggplot()+
 
 ``` r
 r_expo <- gen_rand_distributions(
-                       .distribution = rexp,
+                       .distribution_random = rexp,
+                       .distribution_density = dexp,
                        .n_obs        = N,
-                       .n_samples    = N_samples, 
+                       .n_samples    = N_samples, .plot=FALSE,
                        rate = 1
                        )
 ```
@@ -234,9 +238,10 @@ ggplot()+
 
 ``` r
 r_gamma <- gen_rand_distributions(
-                       .distribution = rgamma,
+                       .distribution_random = rgamma,
+                       .distribution_density = dgamma,
                        .n_obs        = N,
-                       .n_samples    = N_samples, 
+                       .n_samples    = N_samples, .plot=FALSE,
                        shape = shape
                        )
 ```
@@ -279,9 +284,10 @@ ggplot()+
 
 ``` r
 r_chi <- gen_rand_distributions(
-                       .distribution = rchisq,
+                       .distribution_random = rchisq,
+                       .distribution_density=dchisq,
                        .n_obs        = N,
-                       .n_samples    = N_samples, 
+                       .n_samples    = N_samples, .plot=FALSE,
                        df = grados
                        )
 ```
