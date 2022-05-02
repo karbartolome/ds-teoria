@@ -1,0 +1,193 @@
+---
+title: "Regresiones"
+author: "Karina Bartolomé"
+date: '2022-05-01'
+output: 
+  github_document:
+    pandoc_args: "--webtex"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+
+library(texPreview)
+tex_opts$set(
+  density = 600  # High resolution LaTeX output
+)
+
+# Include HTML images when knitting with github_document
+if (isTRUE(getOption('knitr.in.progress'))) {
+  tex_opts$set(
+    returnType = "html"
+  )
+}
+
+# This could go in tex_opts$set, but it doesn't seem to actually get used there
+usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
+```
+
+
+
+# Referencias
+
+<https://bookdown.org/roback/bookdown-BeyondMLR/ch-MLRreview.html>
+
+```{r, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(gt)
+library(AER)
+library(performance)
+```
+
+Se utiliza el paquete `{AER}` 📦 (Applied Econometric with R), que contiene un gran número de datasets econométricos.
+
+En este caso, los datos contienen información sobre resultados educativos,Stock & Watson (2007). Incluyen características sociodemográficas de estudiantes y escuelas en distritos de California.
+
+```{r, message=FALSE, warning=FALSE}
+#data(package='AER') # Lista los datasets disponibles en el paquete AER
+```
+
+Se cargan los datos:
+
+```{r}
+data("CASchools")
+```
+
+```{r, echo=FALSE}
+CASchools %>% select(math, teachers, students, lunch, income, expenditure, computer) %>% 
+  skimr::skim() %>% 
+  select(Variable = skim_variable,
+         Prom = numeric.mean, 
+         SD = numeric.sd, 
+         Min = numeric.p0,
+         p25 = numeric.p25,
+         Mediana = numeric.p50,
+         Max = numeric.p100,
+         Distribución = numeric.hist, 
+         `N faltantes`=n_missing) %>% 
+  gt() %>% fmt_number(2:7, decimals = 2) %>% 
+  tab_header(title=md('**Tamaño de clase y desempeño en matemática**'),
+             subtitle='Distribución de las variables relevantes') 
+```
+
+# Algunos conceptos vinculados a regresiones
+
+# 1. Regresión lineal
+
+$\hat{Y} = \alpha + \beta * X_1$
+
+Se busca estimar el efecto de lunch sobre math:
+
+```{r}
+modelo_reg_lineal <- lm(math ~ lunch, data=CASchools)
+```
+
+Con {equatiomatic} se visualiza la ecuación del modelo:
+
+```{r, eval=FALSE}
+equatiomatic::extract_eq(modelo_reg_lineal)
+```
+
+```{r reg_lineal_eq, echo=FALSE}
+equatiomatic::extract_eq(modelo_reg_lineal, 
+                         vars_colors      = c(tamaño = 'red'),
+                         greek_colors     = c('black', 'red', 'black'), 
+                         subscript_colors = c('black', 'red', 'black')) 
+
+  # tex_preview(usrPackages = usrPackages)
+```
+
+También es posible visualizar la regresión lineal estimada (con los coeficientes correspondientes):
+
+```{r reg_lineal_eq_coef}
+equatiomatic::extract_eq(modelo_reg_lineal, use_coefs=TRUE) 
+```
+
+El error de estimación es la diferencia entre el valor observado y el valor predicho:
+
+$$ \operatorname{math} - \operatorname{\widehat{math}} = \epsilon $$
+
+Visualmente: 
+
+```{r plot_reg_fit, fig.height=3, fig.width=5, echo=FALSE, message=FALSE}
+m_eq <- equatiomatic::extract_eq(modelo_reg_lineal, 
+                                 use_coef = TRUE, ital_vars = TRUE)
+prep_eq <- gsub("\\\\_", "-", m_eq)
+prep_eq <- paste("$", as.character(prep_eq), "$", sep = "")
+
+CASchools %>% 
+  ggplot(aes(x=lunch, y=math))+
+  geom_point(color='red', alpha=0.2, size=1)+
+  xlim(c(0,max(CASchools$lunch)))+
+  stat_smooth(method='lm', color='blue', se=FALSE, fullrange=TRUE)+
+  labs(
+    title = "Relación entre ayuda para almuerzo y el desempeño en matemática",
+    subtitle = latex2exp::TeX(prep_eq)
+  )+
+  theme_minimal()
+```
+
+
+```{r plot_reg_pred, fig.height=3, fig.width=5, echo=FALSE, message=FALSE}
+preds <- data.frame(lunch = c(5,20,50)) %>% 
+  mutate(math_pred = predict(modelo_reg_lineal, .), 
+         caso = c('red','green', 'black'), 
+         texto= paste0('(Lunch=',lunch,', Math=',round(math_pred),')')) 
+
+ggplot(data=CASchools)+
+  
+  xlim(c(0,max(CASchools$lunch)))+
+  ylim(c(min(CASchools$math),max(CASchools$math)))+
+  stat_smooth(aes(x=lunch, y=math), 
+              method='lm', color='blue', se=FALSE, fullrange=TRUE)+
+  
+  geom_point(data=preds, show.legend = FALSE,
+             aes(x=lunch, y=math_pred, color=caso), size=4)+
+  
+  geom_segment(data=preds, linetype=2, show.legend = FALSE,
+               aes(x=0, xend=lunch,  
+                   y=math_pred, yend=math_pred, 
+                   color=caso)) +
+  geom_segment(data=preds, linetype=2, show.legend = FALSE,
+               aes(x=lunch, xend=lunch,  
+                   y=min(CASchools$math), yend=math_pred, 
+                   color=caso)) +
+  
+  geom_text(data=preds, vjust=-0.5, hjust=-0.1,
+            aes(x=lunch, y=math_pred, label=texto, color=caso))+
+  
+  scale_color_identity()+
+  
+  
+  labs(
+    title = "Relación entre el tamaño de la clase y el desempeño en matemática",
+    subtitle = latex2exp::TeX(prep_eq))+
+  theme_minimal()+theme(legend.position = 'none')
+```
+
+## 1.1: Supuestos para regresión lineal
+
+```{r, fig.height=10}
+performance::check_model(modelo_reg_lineal)
+```
+
+------------------------------------------------------------------------
+
+
+
+# 2. Regresión lineal multivariada
+
+# 3. GLM: Generalized linear models
+
+Para casos en los cuales no se cumple el supuesto de normalidad de la variable Y (outcome).
+
+## 3.1: Regresión logística (outcome binario)
+
+Y \~ Binomial()
+
+## 3.2: Regresión de Poisson (conteo)
+
+Y \~ Poisson()
