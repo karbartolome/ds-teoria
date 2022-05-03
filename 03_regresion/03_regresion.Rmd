@@ -56,7 +56,7 @@ Se cargan los datos:
 data("CASchools")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=TRUE}
 CASchools %>% select(math, teachers, students, lunch, income, expenditure, computer) %>% 
   skimr::skim() %>% 
   select(Variable = skim_variable,
@@ -70,22 +70,32 @@ CASchools %>% select(math, teachers, students, lunch, income, expenditure, compu
          `N faltantes`=n_missing) %>% 
   gt() %>% fmt_number(2:7, decimals = 2) %>% 
   tab_header(title=md('**Tamaño de clase y desempeño en matemática**'),
-             subtitle='Distribución de las variables relevantes') 
+             subtitle='Distribución de las variables relevantes') %>% 
+  gt::gtsave('eda.png')
 ```
+
+```{r, echo=FALSE, fig.align='center', out.width='70%'}
+knitr::include_graphics('eda.png')
+```
+
 
 # Algunos conceptos vinculados a regresiones
 
 # 1. Regresión lineal
 
-$\hat{Y} = \alpha + \beta * X_1$
+En esta sección se estima un modelo de regresión linal univariado, definido como:
 
-Se busca estimar el efecto de lunch sobre math:
+$\hat{Y} = \alpha + \beta_1 X_1$
+
+Donde Y es la variable a predecir y X una variable independiente. 
+
+Se busca estimar el efecto de **lunch** sobre **math**:
 
 ```{r}
 modelo_reg_lineal <- lm(math ~ lunch, data=CASchools)
 ```
 
-Con {equatiomatic} se visualiza la ecuación del modelo:
+Con `{equatiomatic}` 📦  se visualiza la ecuación del modelo:
 
 ```{r, eval=FALSE}
 equatiomatic::extract_eq(modelo_reg_lineal)
@@ -93,17 +103,16 @@ equatiomatic::extract_eq(modelo_reg_lineal)
 
 ```{r reg_lineal_eq, echo=FALSE}
 equatiomatic::extract_eq(modelo_reg_lineal, 
-                         vars_colors      = c(tamaño = 'red'),
+                         vars_colors      = c(lunch = 'red'),
                          greek_colors     = c('black', 'red', 'black'), 
                          subscript_colors = c('black', 'red', 'black')) 
-
-  # tex_preview(usrPackages = usrPackages)
 ```
 
 También es posible visualizar la regresión lineal estimada (con los coeficientes correspondientes):
 
 ```{r reg_lineal_eq_coef}
-equatiomatic::extract_eq(modelo_reg_lineal, use_coefs=TRUE) 
+equatiomatic::extract_eq(modelo_reg_lineal, 
+                         use_coefs=TRUE) 
 ```
 
 El error de estimación es la diferencia entre el valor observado y el valor predicho:
@@ -179,6 +188,35 @@ performance::check_model(modelo_reg_lineal)
 
 
 # 2. Regresión lineal multivariada
+
+Ahora se consideran N variables independientes: 
+
+$\hat{Y} = \alpha + \beta_1 X_1 + ... + \beta_n X_n$
+
+
+```{r}
+modelo_reg_lineal_multiple <- lm(math ~ lunch+income+students, data=CASchools)
+```
+
+Con `{equatiomatic}` 📦  se visualiza la ecuación del modelo:
+
+```{r, eval=FALSE}
+equatiomatic::extract_eq(modelo_reg_lineal_multiple)
+```
+
+```{r reg_lineal_multiple_eq, echo=FALSE}
+equatiomatic::extract_eq(modelo_reg_lineal_multiple, 
+                         vars_colors      = c(tamaño = 'red')) 
+```
+
+También es posible visualizar la regresión lineal estimada (con los coeficientes correspondientes):
+
+```{r reg_lineal_multiple_eq_coef}
+equatiomatic::extract_eq(modelo_reg_lineal_multiple, 
+                         use_coefs=TRUE) 
+```
+
+
 
 # 3. GLM: Generalized linear models
 
