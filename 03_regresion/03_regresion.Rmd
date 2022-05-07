@@ -56,7 +56,7 @@ Se cargan los datos:
 data("CASchools")
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=FALSE}
 CASchools %>% select(math, teachers, students, lunch, income, expenditure, computer) %>% 
   skimr::skim() %>% 
   select(Variable = skim_variable,
@@ -226,6 +226,73 @@ Para casos en los cuales no se cumple el supuesto de normalidad de la variable Y
 
 Y \~ Binomial()
 
+```{r}
+data("CreditCard")
+```
+
+```{r}
+modelo_reg_logistica <- glm(factor(reports > 0) ~ age + income + owner,
+                            data = CreditCard, 
+                            family = binomial)
+```
+
+```{r}
+equatiomatic::extract_eq(modelo_reg_logistica)
+```
+
+```{r}
+equatiomatic::extract_eq(modelo_reg_logistica, use_coefs=TRUE)
+```
+
+```{r}
+gtsummary::tbl_regression(
+  modelo_reg_logistica,
+  intercept = TRUE
+  ) %>%  gtsummary::as_kable()
+```
+
+
 ## 3.2: Regresión de Poisson (conteo)
 
 Y \~ Poisson()
+
+```{r}
+modelo_reg_poisson <- glm(reports ~ age + income + expenditure, 
+                          data = CreditCard, family = poisson)
+summary(modelo_reg_poisson)
+```
+
+```{r, eval=FALSE}
+equatiomatic::extract_eq(modelo_reg_poisson)
+```
+
+$$
+\log ({ E( \operatorname{reports} ) })  = \alpha + \beta_{1}(\operatorname{age}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{expenditure})
+$$
+
+```{r, eval=FALSE}
+equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
+```
+
+$$
+\log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{expenditure})
+$$
+
+```{r}
+gtsummary::tbl_regression(
+  modelo_reg_poisson,
+  intercept = TRUE
+  ) %>% gtsummary::as_kable()
+```
+
+
+
+
+
+
+
+
+
+
+
+
