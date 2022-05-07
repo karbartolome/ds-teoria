@@ -1,0 +1,78 @@
+---
+title: "Untitled"
+author: "Karina Bartolomé"
+date: '2022-05-07'
+output:
+  github_document:
+    toc: yes
+    toc_depth: 5
+    pandoc_args: --webtex
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::knit_hooks$set(time_it = local({
+  now <- NULL
+  function(before, options) {
+    if (before) {
+      # record the current time before each chunk
+      now <<- Sys.time()
+    } else {
+      # calculate the time difference after a chunk
+      res <- difftime(Sys.time(), now)
+      # return a character string to show the time
+      # paste("Time for this code chunk to run:", res)
+      paste("Time for the chunk", options$label, "to run:", res)
+    }
+  }
+}))
+# knit_hooks$get("inline")
+# knitr::opts_chunk$set(fig.pos = "!H", out.extra = "")
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.path = "figures/")
+
+```
+
+
+```{r}
+modelo <- lm(Sepal.Length ~ Petal.Length, data=iris)
+```
+
+
+
+$$
+\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})
+$$ 
+
+
+$\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})$
+
+```{r, results='asis'}
+eq <- equatiomatic::extract_eq(modelo, use_coefs = TRUE)
+cat(paste0('$',eq,'$'))
+```
+
+
+```{r, results='asis'}
+cat(paste0('$',gsub('widehat','',eq),'$'))
+
+```
+
+
+
+```{r}
+eq <- equatiomatic::extract_eq(modelo, use_coefs = FALSE)
+cat(eq)
+```
+
+
+```{r, results='asis'}
+cat(paste0('$',eq,'$'))
+```
+
+$\hat{hola}$
+
+```math
+\hat(x)
+```
