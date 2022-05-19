@@ -1,3 +1,30 @@
+Regresiones
+================
+Karina Bartolomé
+2022-05-01
+
+-   <a href="#referencias" id="toc-referencias">Referencias</a>
+-   <a href="#algunos-conceptos-vinculados-a-regresiones"
+    id="toc-algunos-conceptos-vinculados-a-regresiones">Algunos conceptos
+    vinculados a regresiones</a>
+-   <a href="#1-regresión-lineal" id="toc-1-regresión-lineal">1. Regresión
+    lineal</a>
+    -   <a href="#11-supuestos-para-regresión-lineal"
+        id="toc-11-supuestos-para-regresión-lineal">1.1: Supuestos para
+        regresión lineal</a>
+-   <a href="#2-regresión-lineal-multivariada"
+    id="toc-2-regresión-lineal-multivariada">2. Regresión lineal
+    multivariada</a>
+-   <a href="#3-glm-generalized-linear-models"
+    id="toc-3-glm-generalized-linear-models">3. GLM: Generalized linear
+    models</a>
+    -   <a href="#31-regresión-logística-outcome-binario"
+        id="toc-31-regresión-logística-outcome-binario">3.1: Regresión logística
+        (outcome binario)</a>
+    -   <a href="#32-regresión-de-poisson-conteo"
+        id="toc-32-regresión-de-poisson-conteo">3.2: Regresión de Poisson
+        (conteo)</a>
+
 # Referencias
 
 <https://bookdown.org/roback/bookdown-BeyondMLR/ch-MLRreview.html>
@@ -37,7 +64,7 @@ data("CASchools")
 En esta sección se estima un modelo de regresión linal univariado,
 definido como:
 
-*Ŷ* = *α* + *β*<sub>1</sub>*X*<sub>1</sub>
+![\hat{Y} = \alpha + \beta_1 X_1](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Chat%7BY%7D%20%3D%20%5Calpha%20%2B%20%5Cbeta_1%20X_1 "\hat{Y} = \alpha + \beta_1 X_1")
 
 Donde Y es la variable a predecir y X una variable independiente.
 
@@ -54,7 +81,7 @@ eq <- equatiomatic::extract_eq(modelo_reg_lineal)
 eq
 ```
 
-math  = *α* + *β*<sub>1</sub>(lunch) + *ϵ*
+![\operatorname{math} = \alpha + \beta\_{1}(\operatorname{lunch}) + \epsilon](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Coperatorname%7Bmath%7D%20%3D%20%5Calpha%20%2B%20%5Cbeta_%7B1%7D%28%5Coperatorname%7Blunch%7D%29%20%2B%20%5Cepsilon "\operatorname{math} = \alpha + \beta_{1}(\operatorname{lunch}) + \epsilon")
 
 También es posible visualizar la regresión lineal estimada (con los
 coeficientes correspondientes):
@@ -66,20 +93,18 @@ eq <- equatiomatic::extract_eq(modelo_reg_lineal,
 eq
 ```
 
-$$
-\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})
-$$
+![\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Coperatorname%7B%5Cwidehat%7Bmath%7D%7D%20%3D%20678.78%20-%200.57%28%5Coperatorname%7Blunch%7D%29 "\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})")
 
 El error de estimación es la diferencia entre el valor observado y el
 valor predicho:
 
-$\operatorname{math} - \operatorname{\widehat{math}} = \epsilon$
+![\operatorname{math} - \operatorname{\widehat{math}} = \epsilon](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Coperatorname%7Bmath%7D%20-%20%5Coperatorname%7B%5Cwidehat%7Bmath%7D%7D%20%3D%20%5Cepsilon "\operatorname{math} - \operatorname{\widehat{math}} = \epsilon")
 
 Visualmente:
 
-![](03_regresion_files/figure-markdown_github/plot_reg_fit-1.png)
+![](03_regresion_files/figure-gfm/plot_reg_fit-1.png)<!-- -->
 
-![](03_regresion_files/figure-markdown_github/plot_reg_pred-1.png)
+![](03_regresion_files/figure-gfm/plot_reg_pred-1.png)<!-- -->
 
 ## 1.1: Supuestos para regresión lineal
 
@@ -87,7 +112,7 @@ Visualmente:
 performance::check_model(modelo_reg_lineal)
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](03_regresion_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
@@ -95,7 +120,7 @@ performance::check_model(modelo_reg_lineal)
 
 Ahora se consideran N variables independientes:
 
-*Ŷ* = *α* + *β*<sub>1</sub>*X*<sub>1</sub> + ... + *β*<sub>*n*</sub>*X*<sub>*n*</sub>
+![\hat{Y} = \alpha + \beta_1 X_1 + ... + \beta_n X_n](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Chat%7BY%7D%20%3D%20%5Calpha%20%2B%20%5Cbeta_1%20X_1%20%2B%20...%20%2B%20%5Cbeta_n%20X_n "\hat{Y} = \alpha + \beta_1 X_1 + ... + \beta_n X_n")
 
 ``` r
 modelo_reg_lineal_multiple <- lm(math ~ lunch+income+students, data=CASchools)
@@ -107,7 +132,7 @@ Con `{equatiomatic}` :package: se visualiza la ecuación del modelo:
 equatiomatic::extract_eq(modelo_reg_lineal_multiple)
 ```
 
-math  = *α* + *β*<sub>1</sub>(lunch) + *β*<sub>2</sub>(income) + *β*<sub>3</sub>(students) + *ϵ*
+![\operatorname{math} = \alpha + \beta\_{1}(\operatorname{lunch}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{students}) + \epsilon](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Coperatorname%7Bmath%7D%20%3D%20%5Calpha%20%2B%20%5Cbeta_%7B1%7D%28%5Coperatorname%7Blunch%7D%29%20%2B%20%5Cbeta_%7B2%7D%28%5Coperatorname%7Bincome%7D%29%20%2B%20%5Cbeta_%7B3%7D%28%5Coperatorname%7Bstudents%7D%29%20%2B%20%5Cepsilon "\operatorname{math} = \alpha + \beta_{1}(\operatorname{lunch}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{students}) + \epsilon")
 
 También es posible visualizar la regresión lineal estimada (con los
 coeficientes correspondientes):
@@ -117,9 +142,7 @@ equatiomatic::extract_eq(modelo_reg_lineal_multiple,
                          use_coefs=TRUE) 
 ```
 
-$$
-\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})
-$$
+![\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Coperatorname%7B%5Cwidehat%7Bmath%7D%7D%20%3D%20663.02%20-%200.44%28%5Coperatorname%7Blunch%7D%29%20%2B%200.69%28%5Coperatorname%7Bincome%7D%29%20%2B%200%28%5Coperatorname%7Bstudents%7D%29 "\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})")
 
 # 3. GLM: Generalized linear models
 
@@ -144,17 +167,13 @@ modelo_reg_logistica <- glm(factor(reports > 0) ~ age + income + owner,
 equatiomatic::extract_eq(modelo_reg_logistica)
 ```
 
-$$
-\log\left\[ \frac { P( \operatorname{reports} = \operatorname{7} ) }{ 1 - P( \operatorname{reports} = \operatorname{7} ) } \right\] = \alpha + \beta\_{1}(\operatorname{age}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{owner}\_{\operatorname{yes}})
-$$
+![\log\left\[ \frac { P( \operatorname{reports} = \operatorname{7} ) }{ 1 - P( \operatorname{reports} = \operatorname{7} ) } \right\] = \alpha + \beta\_{1}(\operatorname{age}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{owner}\_{\operatorname{yes}})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clog%5Cleft%5B%20%5Cfrac%20%7B%20P%28%20%5Coperatorname%7Breports%7D%20%3D%20%5Coperatorname%7B7%7D%20%29%20%7D%7B%201%20-%20P%28%20%5Coperatorname%7Breports%7D%20%3D%20%5Coperatorname%7B7%7D%20%29%20%7D%20%5Cright%5D%20%3D%20%5Calpha%20%2B%20%5Cbeta_%7B1%7D%28%5Coperatorname%7Bage%7D%29%20%2B%20%5Cbeta_%7B2%7D%28%5Coperatorname%7Bincome%7D%29%20%2B%20%5Cbeta_%7B3%7D%28%5Coperatorname%7Bowner%7D_%7B%5Coperatorname%7Byes%7D%7D%29 "\log\left[ \frac { P( \operatorname{reports} = \operatorname{7} ) }{ 1 - P( \operatorname{reports} = \operatorname{7} ) } \right] = \alpha + \beta_{1}(\operatorname{age}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{owner}_{\operatorname{yes}})")
 
 ``` r
 equatiomatic::extract_eq(modelo_reg_logistica, use_coefs=TRUE)
 ```
 
-$$
-\log\left\[ \frac { \widehat{P( \operatorname{reports} = \operatorname{7} )} }{ 1 - \widehat{P( \operatorname{reports} = \operatorname{7} )} } \right\] = -2.24 + 0.02(\operatorname{age}) + 0.07(\operatorname{income}) - 0.38(\operatorname{owner}\_{\operatorname{yes}})
-$$
+![\log\left\[ \frac { \widehat{P( \operatorname{reports} = \operatorname{7} )} }{ 1 - \widehat{P( \operatorname{reports} = \operatorname{7} )} } \right\] = -2.24 + 0.02(\operatorname{age}) + 0.07(\operatorname{income}) - 0.38(\operatorname{owner}\_{\operatorname{yes}})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clog%5Cleft%5B%20%5Cfrac%20%7B%20%5Cwidehat%7BP%28%20%5Coperatorname%7Breports%7D%20%3D%20%5Coperatorname%7B7%7D%20%29%7D%20%7D%7B%201%20-%20%5Cwidehat%7BP%28%20%5Coperatorname%7Breports%7D%20%3D%20%5Coperatorname%7B7%7D%20%29%7D%20%7D%20%5Cright%5D%20%3D%20-2.24%20%2B%200.02%28%5Coperatorname%7Bage%7D%29%20%2B%200.07%28%5Coperatorname%7Bincome%7D%29%20-%200.38%28%5Coperatorname%7Bowner%7D_%7B%5Coperatorname%7Byes%7D%7D%29 "\log\left[ \frac { \widehat{P( \operatorname{reports} = \operatorname{7} )} }{ 1 - \widehat{P( \operatorname{reports} = \operatorname{7} )} } \right] = -2.24 + 0.02(\operatorname{age}) + 0.07(\operatorname{income}) - 0.38(\operatorname{owner}_{\operatorname{yes}})")
 
 ``` r
 gtsummary::tbl_regression(
@@ -177,16 +196,22 @@ gtsummary::tbl_regression(
 Siendo Y el número de eventos que ocurren en un determinado tiempo, Y
 puede ser modelado mediante una distribución de Poisson:
 
-$P(Y=y)=\frac{e^{-λ}λ^{y}}{y!}, \\ y=0,1,2,…,∞$
+![P(Y=y)=\frac{e^{-λ}λ^{y}}{y!}, \\ y=0,1,2,…,∞](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;P%28Y%3Dy%29%3D%5Cfrac%7Be%5E%7B-%CE%BB%7D%CE%BB%5E%7By%7D%7D%7By%21%7D%2C%20%5C%20y%3D0%2C1%2C2%2C%E2%80%A6%2C%E2%88%9E "P(Y=y)=\frac{e^{-λ}λ^{y}}{y!}, \ y=0,1,2,…,∞")
 
 Propiedades de la distribución de Poisson:
 
--   E(Y) = Var(Y) = *λ*
+-   E(Y) = Var(Y) =
+    ![\lambda](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clambda "\lambda")
 
--   Usualmente sesgada a la derecha, particularmente para *λ* chico
+-   Usualmente sesgada a la derecha, particularmente para
+    ![\lambda](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clambda "\lambda")
+    chico
 
--   A medida que *λ* aumenta, la distribución se vuelve más simétrica.
-    Si*λ* es lo suficientemente grande, Y se puede aproximar con una
+-   A medida que
+    ![\lambda](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clambda "\lambda")
+    aumenta, la distribución se vuelve más simétrica.
+    Si![\lambda](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clambda "\lambda")
+    es lo suficientemente grande, Y se puede aproximar con una
     distribución normal.
 
 ``` r
@@ -205,7 +230,7 @@ data.frame(x=c(0:10)) %>%
        subtitle='Distintos valores de lambda')
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](03_regresion_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 ``` r
 modelo_reg_poisson <- glm(reports ~ age + income + expenditure, 
@@ -244,17 +269,13 @@ summary(modelo_reg_poisson)
 equatiomatic::extract_eq(modelo_reg_poisson)
 ```
 
-$$
-\log ({ E( \operatorname{reports} ) })  = \alpha + \beta\_{1}(\operatorname{age}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{\expenditure})
-$$
+![\log ({ E( \operatorname{reports} ) })  = \alpha + \beta\_{1}(\operatorname{age}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{\expenditure})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clog%20%28%7B%20E%28%20%5Coperatorname%7Breports%7D%20%29%20%7D%29%20%20%3D%20%5Calpha%20%2B%20%5Cbeta_%7B1%7D%28%5Coperatorname%7Bage%7D%29%20%2B%20%5Cbeta_%7B2%7D%28%5Coperatorname%7Bincome%7D%29%20%2B%20%5Cbeta_%7B3%7D%28%5Coperatorname%7B%5Cexpenditure%7D%29 "\log ({ E( \operatorname{reports} ) })  = \alpha + \beta_{1}(\operatorname{age}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{\expenditure})")
 
 ``` r
 equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
 ```
 
-$$
-\log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{\expenditure})
-$$
+![\log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{\expenditure})](https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;%5Clog%20%28%7B%20%5Cwidehat%7BE%28%20%5Coperatorname%7Breports%7D%20%29%7D%20%7D%29%20%20%3D%20-0.82%20%2B%200.01%28%5Coperatorname%7Bage%7D%29%20%2B%200.08%28%5Coperatorname%7Bincome%7D%29%20%2B%200%28%5Coperatorname%7B%5Cexpenditure%7D%29 "\log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{\expenditure})")
 
 ``` r
 gtsummary::tbl_regression(
