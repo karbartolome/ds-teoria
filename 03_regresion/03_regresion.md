@@ -179,7 +179,7 @@ gtsummary::tbl_regression(
 Siendo Y el número de eventos que ocurren en un determinado tiempo, Y
 puede ser modelado mediante una distribución de Poisson:
 
-$$P(Y=y)=\frac{e^{-λ}λ^{y}}{y!},  \\ y=0,1,2,…,∞$$
+$P(Y=y)=\frac{e^{-λ}λ^{y}}{y!}, \\ y=0,1,2,…,∞$
 
 Propiedades de la distribución de Poisson:
 
@@ -251,6 +251,10 @@ log (*E*(reports)) = *α* + *β*<sub>1</sub>(age) + *β*<sub>2</su
 ``` r
 equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
 ```
+
+$$
+\log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{\expenditure})
+$$
 
 $\log ({\widehat{E( \operatorname{reports})}}) = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{expenditure})$
 
