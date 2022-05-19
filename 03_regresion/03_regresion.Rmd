@@ -3,12 +3,12 @@ title: "Regresiones"
 author: "Karina Bartolomé"
 date: '2022-05-01'
 output:
-   github_document:
-     toc: yes
-     toc_depth: 5
-     pandoc_args: --webtex
-  #md_document:
-  #  variant: markdown_github
+  # github_document:
+  #   toc: yes
+  #   toc_depth: 5
+  #   pandoc_args: --webtex
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
