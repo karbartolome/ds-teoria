@@ -17,23 +17,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
 ```
 
-```{r, eval=FALSE, echo=FALSE}
-library(texPreview)
-tex_opts$set(
-  density = 600  # High resolution LaTeX output
-)
-
-# Include HTML images when knitting with github_document
-if (isTRUE(getOption('knitr.in.progress'))) {
-  tex_opts$set(
-    returnType = "html"
-  )
-}
-
-# This could go in tex_opts$set, but it doesn't seem to actually get used there
-usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
-```
-
 # Referencias
 
 <https://bookdown.org/roback/bookdown-BeyondMLR/ch-MLRreview.html>
@@ -104,10 +87,6 @@ Con `{equatiomatic}` :package: se visualiza la ecuación del modelo:
 ```{r}
 eq <- equatiomatic::extract_eq(modelo_reg_lineal)
 eq
-```
-
-```{r, echo=FALSE, eval=TRUE, results='asis'}
-cat(paste0('$',eq,'$'))
 ```
 
 También es posible visualizar la regresión lineal estimada (con los coeficientes correspondientes):
@@ -208,21 +187,18 @@ Con `{equatiomatic}` :package: se visualiza la ecuación del modelo:
 equatiomatic::extract_eq(modelo_reg_lineal_multiple)
 ```
 
-```{r reg_lineal_multiple_eq, echo=FALSE, eval=FALSE}
+```{r reg_lineal_multiple_eq, echo=FALSE, eval=TRUE}
 equatiomatic::extract_eq(modelo_reg_lineal_multiple, 
                          vars_colors      = c(tamaño = 'red')) 
 ```
 
-$\operatorname{math} = \alpha + \beta_{1}(\operatorname{lunch}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{students}) + \epsilon$
 
 También es posible visualizar la regresión lineal estimada (con los coeficientes correspondientes):
 
-```{r reg_lineal_multiple_eq_coef, eval=FALSE}
+```{r reg_lineal_multiple_eq_coef, eval=TRUE}
 equatiomatic::extract_eq(modelo_reg_lineal_multiple, 
                          use_coefs=TRUE) 
 ```
-
-$\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})$
 
 # 3. GLM: Generalized linear models
 
@@ -294,17 +270,14 @@ modelo_reg_poisson <- glm(reports ~ age + income + expenditure,
 summary(modelo_reg_poisson)
 ```
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 equatiomatic::extract_eq(modelo_reg_poisson)
 ```
-
-$\log ({ E( \operatorname{reports} ) })  = \alpha + \beta_{1}(\operatorname{age}) + \beta_{2}(\operatorname{income}) + \beta_{3}(\operatorname{expenditure})$
 
 ```{r, eval=TRUE}
 equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
 ```
 
-$\log ({\widehat{E( \operatorname{reports})}}) = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{expenditure})$
 
 ```{r}
 gtsummary::tbl_regression(

@@ -56,8 +56,6 @@ eq
 
 math  = *α* + *β*<sub>1</sub>(lunch) + *ϵ*
 
-math  = *α* + *β*<sub>1</sub>(lunch) + *ϵ*
-
 También es posible visualizar la regresión lineal estimada (con los
 coeficientes correspondientes):
 
@@ -91,7 +89,7 @@ Visualmente:
 performance::check_model(modelo_reg_lineal)
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](03_regresion_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 ------------------------------------------------------------------------
 
@@ -121,7 +119,9 @@ equatiomatic::extract_eq(modelo_reg_lineal_multiple,
                          use_coefs=TRUE) 
 ```
 
-$\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})$
+$$
+\operatorname{\widehat{math}} = 663.02 - 0.44(\operatorname{lunch}) + 0.69(\operatorname{income}) + 0(\operatorname{students})
+$$
 
 # 3. GLM: Generalized linear models
 
@@ -207,7 +207,7 @@ data.frame(x=c(0:10)) %>%
        subtitle='Distintos valores de lambda')
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](03_regresion_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
 ``` r
 modelo_reg_poisson <- glm(reports ~ age + income + expenditure, 
@@ -246,7 +246,9 @@ summary(modelo_reg_poisson)
 equatiomatic::extract_eq(modelo_reg_poisson)
 ```
 
-log (*E*(reports)) = *α* + *β*<sub>1</sub>(age) + *β*<sub>2</sub>(income) + *β*<sub>3</sub>(expenditure)
+$$
+\log ({ E( \operatorname{reports} ) })  = \alpha + \beta\_{1}(\operatorname{age}) + \beta\_{2}(\operatorname{income}) + \beta\_{3}(\operatorname{\expenditure})
+$$
 
 ``` r
 equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
@@ -255,8 +257,6 @@ equatiomatic::extract_eq(modelo_reg_poisson, use_coefs=TRUE)
 $$
 \log ({ \widehat{E( \operatorname{reports} )} })  = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{\expenditure})
 $$
-
-$\log ({\widehat{E( \operatorname{reports})}}) = -0.82 + 0.01(\operatorname{age}) + 0.08(\operatorname{income}) + 0(\operatorname{expenditure})$
 
 ``` r
 gtsummary::tbl_regression(
