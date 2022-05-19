@@ -98,9 +98,6 @@ eq <- equatiomatic::extract_eq(modelo_reg_lineal,
 eq
 ```
 
-```{r, echo=FALSE, eval=TRUE, results='asis'}
-cat(paste0('$',eq,'$'))
-```
 
 El error de estimación es la diferencia entre el valor observado y el valor predicho:
 

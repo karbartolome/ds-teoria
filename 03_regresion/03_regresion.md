@@ -70,8 +70,6 @@ $$
 \operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})
 $$
 
-$\operatorname{\widehat{math}} = 678.78 - 0.57(\operatorname{lunch})$
-
 El error de estimación es la diferencia entre el valor observado y el
 valor predicho:
 
@@ -89,7 +87,7 @@ Visualmente:
 performance::check_model(modelo_reg_lineal)
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](03_regresion_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 ------------------------------------------------------------------------
 
@@ -207,7 +205,7 @@ data.frame(x=c(0:10)) %>%
        subtitle='Distintos valores de lambda')
 ```
 
-![](03_regresion_files/figure-markdown_github/unnamed-chunk-17-1.png)
+![](03_regresion_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 ``` r
 modelo_reg_poisson <- glm(reports ~ age + income + expenditure, 
